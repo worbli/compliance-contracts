@@ -1,12 +1,20 @@
-#pragma once
 
+#pragma once
 #include <eosiolib/eosio.hpp>
-#include <provider.hpp>
 
 using namespace eosio;
 
-namespace provider
+struct [[eosio::table, eosio::contract("provider")]] verification
 {
+   name credential_code;
+   bool value; // TODO: we may not need this if we only have boolean values
+   uint16_t primary_key() const { return credential_code.value; }
+
+   EOSLIB_SERIALIZE(verification, (credential_code)(value))
+};
+
+typedef eosio::multi_index<name("registry"), verification> registry;
+
   struct REQUIREMENT_SET
   {
     std::vector<name> providers;
@@ -18,7 +26,7 @@ namespace provider
   {
     for (name provider : providers)
     {
-      ::provider::registry registry_table(provider, account.value);
+      registry registry_table(provider, account.value);
       for (name code : credential_codes)
       {
         auto itr = registry_table.find(code.value);
@@ -43,4 +51,3 @@ namespace provider
     }
     return false;
   }
-} // namespace test

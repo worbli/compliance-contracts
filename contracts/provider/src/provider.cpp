@@ -1,15 +1,15 @@
 #include <provider.hpp>
+#include <provider-common.hpp>
 #include <verification_registry.hpp>
-// test - remove
-#include "client.cpp"
-using namespace test;
+
 
 ACTION provider::addentry( name account, name credential_code, std::string value ) {
    require_auth(_self);
 
    // confirm account exists
-   verification_registry::credentials credentials_table("credregistry"_n, "credregistry"_n.value);
+   verification_registry::credentials credentials_table("providers"_n, "providers"_n.value);
    auto cred_itr = credentials_table.find(credential_code.value);
+   print("credential: ", credential_code);
    check( cred_itr != credentials_table.end(), "credential not defined in registry" );
 
    registry registry_table(_self, account.value);
