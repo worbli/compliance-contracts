@@ -1,6 +1,9 @@
-#include <verification_registry.hpp>
+#include <worbli.compliance.hpp>
+#include <compliance-common.hpp>
 
-ACTION verification_registry::addcred( name credential_code, std::string description ) {
+using namespace worbli_compliance;
+
+ACTION compliance::addcred( name credential_code, std::string description ) {
    require_auth(_self);
 
    credentials credentials_table(_self, _self.value);
@@ -13,7 +16,7 @@ ACTION verification_registry::addcred( name credential_code, std::string descrip
    });
 }
 
-ACTION verification_registry::updcred( name credential_code, std::string description ) {
+ACTION compliance::updcred( name credential_code, std::string description ) {
    require_auth(_self);
 
    credentials credentials_table(_self, _self.value);
@@ -25,7 +28,7 @@ ACTION verification_registry::updcred( name credential_code, std::string descrip
    });
 }
 
-ACTION verification_registry::addprovider( name provider, std::string description ) {
+ACTION compliance::addprovider( name provider, std::string description ) {
    require_auth(_self);
 
    providers providers_table(_self, _self.value);
@@ -38,7 +41,7 @@ ACTION verification_registry::addprovider( name provider, std::string descriptio
    });
 }
 
-ACTION verification_registry::updprovider( name provider, std::string description ) {
+ACTION compliance::updprovider( name provider, std::string description ) {
    require_auth(_self);
 
    providers providers_table(_self, _self.value);
@@ -54,7 +57,7 @@ ACTION verification_registry::updprovider( name provider, std::string descriptio
 /** *
  * TODO: how do we handle a provider that stops performing a particular validation after being active
 */
-ACTION verification_registry::addprovcred( name provider, name credential_code ) {
+ACTION compliance::addprovcred( name provider, name credential_code ) {
    require_auth(_self);
 
    providers providers_table(_self, _self.value);
@@ -66,4 +69,4 @@ ACTION verification_registry::addprovcred( name provider, name credential_code )
    });
 }
 
-EOSIO_DISPATCH( verification_registry, (addcred)(updcred)(addprovider)(updprovider)(addprovcred) )
+EOSIO_DISPATCH( compliance, (addcred)(updcred)(addprovider)(updprovider)(addprovcred) )
