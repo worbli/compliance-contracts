@@ -1,6 +1,6 @@
 
-#pragma once
 #include <eosiolib/eosio.hpp>
+#include <compliance-common.hpp>
 
 using namespace eosio;
 

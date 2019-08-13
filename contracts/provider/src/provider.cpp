@@ -1,6 +1,4 @@
 #include <provider.hpp>
-#include <provider-common.hpp>
-#include <compliance-common.hpp>
 
 using namespace worbli_compliance;
 
