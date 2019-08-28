@@ -1,17 +1,10 @@
-include(ExternalProject)
-# if no cdt root is given use default path
-if(EOSIO_CDT_ROOT STREQUAL "" OR NOT EOSIO_CDT_ROOT)
-   find_package(eosio.cdt)
-endif()
+add_contract(worbli.compliance worbli.compliance ${CMAKE_CURRENT_SOURCE_DIR}/src/worbli.compliance.cpp)
 
-ExternalProject_Add(
-   verification_registry_project
-   SOURCE_DIR ${CMAKE_SOURCE_DIR}/src
-   BINARY_DIR ${CMAKE_BINARY_DIR}/worbli.compliance
-   CMAKE_ARGS -DCMAKE_TOOLCHAIN_FILE=${EOSIO_CDT_ROOT}/lib/cmake/eosio.cdt/EosioWasmToolchain.cmake
-   UPDATE_COMMAND ""
-   PATCH_COMMAND ""
-   TEST_COMMAND ""
-   INSTALL_COMMAND ""
-   BUILD_ALWAYS 1
-)
+target_include_directories(worbli.compliance
+   PUBLIC
+   ${CMAKE_CURRENT_SOURCE_DIR}/include
+   ${CMAKE_CURRENT_SOURCE_DIR}/../worbli.compliance/include)
+
+set_target_properties(worbli.compliance
+   PROPERTIES
+   RUNTIME_OUTPUT_DIRECTORY "${CMAKE_CURRENT_BINARY_DIR}")
