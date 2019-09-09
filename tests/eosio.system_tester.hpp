@@ -38,8 +38,8 @@ public:
 
 
       produce_blocks( 100 );
-      set_code( N(eosio.token), contracts::token_wasm());
-      set_abi( N(eosio.token), contracts::token_abi().data() );
+      set_code( N(eosio.token), contracts::util::token_wasm());
+      set_abi( N(eosio.token), contracts::util::token_abi().data() );
       {
          const auto& accnt = control->db().get<account_object,by_name>( N(eosio.token) );
          abi_def abi;
@@ -56,8 +56,8 @@ public:
    }
 
    void deploy_contract( bool call_init = true ) {
-      set_code( config::system_account_name, contracts::system_wasm() );
-      set_abi( config::system_account_name, contracts::system_abi().data() );
+      set_code( config::system_account_name, contracts::util::system_wasm() );
+      set_abi( config::system_account_name, contracts::util::system_abi().data() );
       if( call_init ) {
          base_tester::push_action(config::system_account_name, N(init),
                                                config::system_account_name,  mutable_variant_object()
@@ -841,30 +841,6 @@ public:
       return data.empty() ? fc::variant() : abi_ser.binary_to_variant( "refund_request", data, abi_serializer_max_time );
    }
 
-   abi_serializer initialize_multisig() {
-      abi_serializer msig_abi_ser;
-      {
-         create_account_with_resources( N(eosio.msig), config::system_account_name );
-         BOOST_REQUIRE_EQUAL( success(), buyram( "eosio", "eosio.msig", core_sym::from_string("5000.0000") ) );
-         produce_block();
-
-         auto trace = base_tester::push_action(config::system_account_name, N(setpriv),
-                                               config::system_account_name,  mutable_variant_object()
-                                               ("account", "eosio.msig")
-                                               ("is_priv", 1)
-         );
-
-         set_code( N(eosio.msig), contracts::msig_wasm() );
-         set_abi( N(eosio.msig), contracts::msig_abi().data() );
-
-         produce_blocks();
-         const auto& accnt = control->db().get<account_object,by_name>( N(eosio.msig) );
-         abi_def msig_abi;
-         BOOST_REQUIRE_EQUAL(abi_serializer::to_abi(accnt.abi, msig_abi), true);
-         msig_abi_ser.set_abi(msig_abi, abi_serializer_max_time);
-      }
-      return msig_abi_ser;
-   }
 
    vector<name> active_and_vote_producers() {
       //stake more than 15% of total EOS supply to activate chain

@@ -7,5 +7,6 @@ find_package(eosio.cdt)
 
 add_subdirectory(worbli.compliance)
 add_subdirectory(provider)
+add_subdirectory(client)
 
 
