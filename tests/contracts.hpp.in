@@ -4,8 +4,10 @@
 namespace eosio { namespace testing {
 
 struct contracts {
-   static std::vector<uint8_t> worblicompliance_wasm() { return read_wasm("${CMAKE_BINARY_DIR}/../contracts/worbli.compliance/worbli.compliance.wasm"); }
-   static std::vector<char>    worblicompliance_abi() { return read_abi("${CMAKE_BINARY_DIR}/../contracts/worbli.compliance/worbli.compliance.abi"); }
+   static std::vector<uint8_t> worbli_reg_wasm() { return read_wasm("${CMAKE_BINARY_DIR}/../contracts/worbli.reg/worbli.reg.wasm"); }
+   static std::vector<char>    worbli_reg_abi() { return read_abi("${CMAKE_BINARY_DIR}/../contracts/worbli.reg/worbli.reg.abi"); }
+   static std::vector<uint8_t> worbli_prov_wasm() { return read_wasm("${CMAKE_BINARY_DIR}/../contracts/worbli.prov/worbli.prov.wasm"); }
+   static std::vector<char>    worbli_prov_abi() { return read_abi("${CMAKE_BINARY_DIR}/../contracts/worbli.prov/worbli.prov.abi"); }
    static std::vector<uint8_t> client_wasm() { return read_wasm("${CMAKE_BINARY_DIR}/../contracts/client/client.wasm"); }
    static std::vector<char>    client_abi() { return read_abi("${CMAKE_BINARY_DIR}/../contracts/client/client.abi"); }
 

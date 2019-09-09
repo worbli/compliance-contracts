@@ -29,6 +29,7 @@ BOOST_FIXTURE_TEST_CASE( provider_management, worblicompliance_tester ) try {
 
    BOOST_REQUIRE_EQUAL( success(), add_entry( N(provider1), N(alice), N(kyc), "true") );
    BOOST_REQUIRE_EQUAL( success(), add_entry( N(provider1), N(alice), N(accredited), "true") );
+   BOOST_REQUIRE_EQUAL( success(), add_entry( N(provider2), N(alice), N(country), "gb") );
 
    BOOST_REQUIRE_EQUAL( wasm_assert_msg( "account already has credential" ),
       add_entry( N(provider1), N(alice), N(kyc), "true") );
@@ -44,7 +45,7 @@ BOOST_FIXTURE_TEST_CASE( provider_management, worblicompliance_tester ) try {
 
    produce_blocks(1);
 
-   BOOST_REQUIRE_EQUAL( success(), test_bool( N(alice) ));
+   BOOST_REQUIRE_EQUAL( success(), client_test1( N(alice) ));
 
 
 } FC_LOG_AND_RETHROW()

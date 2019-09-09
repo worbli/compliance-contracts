@@ -1,7 +1,7 @@
 #!/bin/sh
 
 worbli system newaccount worbli.admin --transfer regulator EOS7Twda1EMGC1FYH2o9d7APfmwZAMtN3e69wQg1CPjBqQSaWH39P --stake-net "5.0000 WBI" --stake-cpu "10.0000 WBI" --buy-ram-kbytes 200
-worbli set contract regulator /home/rob/git/compliance-contracts-cmake/build/contracts/worbli.compliance -p regulator
+worbli set contract regulator /home/rob/git/compliance-contracts-cmake/build/contracts/worbli.reg -p regulator
 
 
 worbli system newaccount worbli.admin --transfer provider1 EOS7Twda1EMGC1FYH2o9d7APfmwZAMtN3e69wQg1CPjBqQSaWH39P --stake-net "5.0000 WBI" --stake-cpu "10.0000 WBI" --buy-ram-kbytes 200

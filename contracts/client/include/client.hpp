@@ -1,5 +1,5 @@
 #include <eosiolib/eosio.hpp>
-#include <compliance-common.hpp>
+#include <worbli.reg.common.hpp>
 
 using namespace eosio;
 using std::vector;
@@ -10,8 +10,9 @@ CONTRACT client : public contract {
    public:
       using contract::contract;
 
-      ACTION booltest( name nm );
+      ACTION test1( name nm );
+      ACTION test2( name nm );
       string get_msg( vector<condition> conditions );
 
-      using booltest_action = action_wrapper<"booltest"_n, &client::booltest>;
+      using booltest_action = action_wrapper<"test1"_n, &client::test1>;
 };

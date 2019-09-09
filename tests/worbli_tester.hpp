@@ -29,8 +29,8 @@ public:
                          N(alice), N(bob)} );
       produce_blocks( 2 );
 
-      set_code( N(regulator), contracts::worblicompliance_wasm() );
-      set_abi( N(regulator), contracts::worblicompliance_abi().data() );
+      set_code( N(regulator), contracts::worbli_reg_wasm() );
+      set_abi( N(regulator), contracts::worbli_reg_abi().data() );
       produce_blocks();
       {
          const auto& accnt = control->db().get<account_object,by_name>( N(regulator) );
@@ -39,8 +39,8 @@ public:
          abi_ser.set_abi(abi, abi_serializer_max_time);
       }
 
-      set_code( N(provider1), contracts::provider_wasm() );
-      set_abi( N(provider1), contracts::provider_abi().data() );
+      set_code( N(provider1), contracts::worbli_prov_wasm() );
+      set_abi( N(provider1), contracts::worbli_prov_abi().data() );
       produce_blocks();
       {
          const auto& accnt = control->db().get<account_object,by_name>( N(provider1) );
@@ -49,8 +49,12 @@ public:
          provider_abi_ser.set_abi(abi, abi_serializer_max_time);
       }
 
-      set_code( N(provider3), contracts::provider_wasm() );
-      set_abi( N(provider3), contracts::provider_abi().data() );
+      set_code( N(provider2), contracts::worbli_prov_wasm() );
+      set_abi( N(provider2), contracts::worbli_prov_abi().data() );
+      produce_blocks();
+
+      set_code( N(provider3), contracts::worbli_prov_wasm() );
+      set_abi( N(provider3), contracts::worbli_prov_abi().data() );
       produce_blocks();
    
       set_code( N(client), contracts::client_wasm() );
@@ -201,8 +205,8 @@ public:
       );
    }
 
-   action_result test_bool( account_name account ) {      
-      return push_action_client( account, N(client), N(booltest), mvo()
+   action_result client_test1( account_name account ) {
+      return push_action_client( account, N(client), N(test1), mvo()
            ( "nm", account )
       );
    }

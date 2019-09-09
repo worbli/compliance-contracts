@@ -1,14 +1,36 @@
 #include <client.hpp>
 
-ACTION client::booltest( name nm ) {
+ACTION client::test1( name nm ) {
 
    vector<condition> conditions_1 {
-      condition{"kyc"_n, "true"},
-      condition{"accredited"_n, "true"}
+      condition{"kyc"_n, {"true"}},
+      condition{"accredited"_n, {"true"}}
+   };
+
+   vector<condition> conditions_2 {
+      condition{"country"_n, {"us","gb","de","jp"}}
    };
 
    auto result = worbli_compliance::validate(name("provider1"), nm, conditions_1);
-   check(result.empty(), "failed checks: " + get_msg(result));
+   check(result.empty(), "producer 1 failed checks: " + get_msg(result));
+
+   result = worbli_compliance::validate(name("provider2"), nm, conditions_2);
+   check(result.empty(), "producer 2 failed checks: " + get_msg(result));
+
+}
+
+ACTION client::test2( name nm ) {
+
+   vector<condition> conditions_1 {
+      condition{"kyc"_n, {"true"}},
+      condition{"country"_n, {"us","gb","de","jp"}}
+   };
+
+   auto result = worbli_compliance::validate(name("provider1"), nm, conditions_1);
+   check(result.empty(), "producer 1 failed checks: " + get_msg(result));
+
+
+
 }
 
 string client::get_msg( vector<condition> conditions ) {
