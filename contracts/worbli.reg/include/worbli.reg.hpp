@@ -1,4 +1,4 @@
-#include <eosiolib/eosio.hpp>
+#include <eosio/eosio.hpp>
 using namespace eosio;
 
 class [[eosio::contract("worbli.reg")]] reg : public contract {

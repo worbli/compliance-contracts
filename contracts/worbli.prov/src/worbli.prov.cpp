@@ -1,6 +1,6 @@
 #include <worbli.prov.hpp>
 
-using namespace worbli_compliance;
+using namespace worblisystem;
 
 ACTION prov::addentry( name account, name attribute_code, std::string value ) {
    require_auth(get_self());
@@ -8,7 +8,8 @@ ACTION prov::addentry( name account, name attribute_code, std::string value ) {
    check( is_account(account), "account does not exist");
 
    // confirm provider supports credential
-   providers providers_table("regulator"_n, "regulator"_n.value);
+   // TODO: put regulator account in a const
+   providers providers_table(regulator_account, regulator_account.value);
    auto prov_itr = providers_table.find(get_self().value);
    check( prov_itr != providers_table.end(), "provider not approved" );
 
@@ -31,7 +32,7 @@ ACTION prov::updentry( name account, name attribute_code, std::string value ) {
    check( is_account(account), "account does not exist");
 
    // confirm provider supports credential
-   providers providers_table("regulator"_n, "regulator"_n.value);
+   providers providers_table(regulator_account, regulator_account.value);
    auto prov_itr = providers_table.find(get_self().value);
    check( prov_itr != providers_table.end(), "provider not approved" );
 
@@ -49,8 +50,6 @@ ACTION prov::updentry( name account, name attribute_code, std::string value ) {
 }
 
 ACTION prov::rmventry( name account, name credential_code ) {
-   /* fill in action body */
-
 }
 
 EOSIO_DISPATCH( prov, (addentry)(updentry)(rmventry) )

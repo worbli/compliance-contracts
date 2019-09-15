@@ -1,5 +1,5 @@
 
-#include <eosiolib/eosio.hpp>
+#include <eosio/eosio.hpp>
 #include <worbli.reg.common.hpp>
 
 using namespace eosio;

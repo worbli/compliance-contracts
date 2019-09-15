@@ -11,10 +11,10 @@ ACTION client::test1( name nm ) {
       condition{"country"_n, {"us","gb","de","jp"}}
    };
 
-   auto result = worbli_compliance::validate(name("provider1"), nm, conditions_1);
+   auto result = worblisystem::validate(name("provider1"), nm, conditions_1);
    check(result.empty(), "producer 1 failed checks: " + get_msg(result));
 
-   result = worbli_compliance::validate(name("provider2"), nm, conditions_2);
+   result = worblisystem::validate(name("provider2"), nm, conditions_2);
    check(result.empty(), "producer 2 failed checks: " + get_msg(result));
 
 }
@@ -26,7 +26,7 @@ ACTION client::test2( name nm ) {
       condition{"country"_n, {"us","gb","de","jp"}}
    };
 
-   auto result = worbli_compliance::validate(name("provider1"), nm, conditions_1);
+   auto result = worblisystem::validate(name("provider1"), nm, conditions_1);
    check(result.empty(), "producer 1 failed checks: " + get_msg(result));
 
 

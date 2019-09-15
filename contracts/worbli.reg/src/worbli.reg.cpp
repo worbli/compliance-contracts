@@ -1,7 +1,7 @@
 #include <worbli.reg.hpp>
 #include <worbli.reg.common.hpp>
 
-using namespace worbli_compliance;
+using namespace worblisystem;
 
 ACTION reg::addcred( name attribute_code, std::string description ) {
    require_auth(_self);

@@ -1,9 +1,9 @@
-#include <eosiolib/eosio.hpp>
+#include <eosio/eosio.hpp>
 using namespace eosio;
 
 #include <cmath>
 
-namespace worbli_compliance
+namespace worblisystem
 {
 
   using std::string;
@@ -70,5 +70,8 @@ namespace worbli_compliance
       }
       return failed;
     }
+
+   static constexpr eosio::name regulator_account{"worbli.reg"_n};
+   static constexpr eosio::name provider_account{"worbli.prov"_n};
 
 } // namespace worbli_compliance

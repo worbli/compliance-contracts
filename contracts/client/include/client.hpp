@@ -1,10 +1,10 @@
-#include <eosiolib/eosio.hpp>
+#include <eosio/eosio.hpp>
 #include <worbli.reg.common.hpp>
 
 using namespace eosio;
 using std::vector;
 using std::string;
-using worbli_compliance::condition;
+using worblisystem::condition;
 
 CONTRACT client : public contract {
    public:

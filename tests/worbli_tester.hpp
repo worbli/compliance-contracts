@@ -25,15 +25,15 @@ public:
 
       produce_blocks( 2 );
 
-      create_accounts( { N(regulator), N(provider1), N(provider2), N(provider3), N(client),
+      create_accounts( { N(worbli.reg), N(provider1), N(provider2), N(provider3), N(client),
                          N(alice), N(bob)} );
       produce_blocks( 2 );
 
-      set_code( N(regulator), contracts::worbli_reg_wasm() );
-      set_abi( N(regulator), contracts::worbli_reg_abi().data() );
+      set_code( N(worbli.reg), contracts::worbli_reg_wasm() );
+      set_abi( N(worbli.reg), contracts::worbli_reg_abi().data() );
       produce_blocks();
       {
-         const auto& accnt = control->db().get<account_object,by_name>( N(regulator) );
+         const auto& accnt = control->db().get<account_object,by_name>( N(worbli.reg) );
          abi_def abi;
          BOOST_REQUIRE_EQUAL(abi_serializer::to_abi(accnt.abi, abi), true);
          abi_ser.set_abi(abi, abi_serializer_max_time);
@@ -169,28 +169,28 @@ public:
 
 
    action_result add_provider( account_name provider, string description ) {
-      return push_action( N(regulator), N(regulator), N(addprovider), mvo()
+      return push_action( N(worbli.reg), N(worbli.reg), N(addprovider), mvo()
            ( "provider", provider )
            ( "description", description )
       );
    }
 
    action_result update_provider( account_name provider, string description ) {
-      return push_action( N(regulator), N(regulator), N(updprovider), mvo()
+      return push_action( N(worbli.reg), N(worbli.reg), N(updprovider), mvo()
            ( "provider", provider )
            ( "description", description )
       );
    }
 
    action_result add_provider_credential( account_name provider, name credential ) {
-      return push_action( N(regulator), N(regulator), N(addprovcred), mvo()
+      return push_action( N(worbli.reg), N(worbli.reg), N(addprovcred), mvo()
            ( "provider", provider )
            ( "credential_code", credential )
       );
    }
 
    action_result add_credential( account_name credential, string description ) {
-      return push_action( N(regulator), N(regulator), N(addcred), mvo()
+      return push_action( N(worbli.reg), N(worbli.reg), N(addcred), mvo()
            ( "credential_code", credential )
            ( "description", description )
       );
