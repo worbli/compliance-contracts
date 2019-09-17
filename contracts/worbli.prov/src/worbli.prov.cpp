@@ -1,4 +1,6 @@
 #include <worbli.prov.hpp>
+#include <worbli.prov.common.hpp>
+#include <worbli.reg.common.hpp>
 
 using namespace worblisystem;
 

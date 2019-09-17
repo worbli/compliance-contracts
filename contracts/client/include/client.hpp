@@ -1,5 +1,5 @@
 #include <eosio/eosio.hpp>
-#include <worbli.reg.common.hpp>
+#include <worbli.prov.common.hpp>
 
 using namespace eosio;
 using std::vector;
