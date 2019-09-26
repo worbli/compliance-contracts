@@ -40,4 +40,31 @@ namespace worblisystem
         return failed;
     }
 
+    inline string getattribute(name provider, name account, name credential_code, int64_t *value)
+    {
+        registry registry_table(provider, account.value);
+        auto itr = registry_table.find(credential_code.value);
+
+        if (itr == registry_table.end()) {
+            value = nullptr;
+            return account.to_string() + " does not have attribute " + provider.to_string()
+                    + ":" + credential_code.to_string();
+        } else {
+            int64_t attr;
+            std::stoi( itr->value );
+            if (0) {
+                value = nullptr;
+                return provider.to_string() + ":" + credential_code.to_string() + " is not an int64";
+            }
+            *value = attr;
+            return "";
+        }
+
+
+    }
+
+
+   static constexpr eosio::name regulator_account{"worbli.reg"_n};
+   static constexpr eosio::name provider_account{"worbli.prov"_n};
+
 } // namespace worblisystem

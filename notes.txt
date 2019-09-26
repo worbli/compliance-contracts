@@ -1,0 +1,34 @@
+Currently no validation of date
+
+- order of entry in history is important for an accurate EMA.
+- What this implies is that if there is an issue with the oracles(s) no inflation calulations will occur until they are fixed
+  and any missing days are backfilled.
+
+- Normalize all data collection to happen at 00:00:00 UTC
+- setttotal validations:
+     - timestamp is 00:00:00 for given day
+     - timestamp doesn't already exist
+     - timestamp is in the past
+     - timestamp is the next day after max hisory.timestamp (to preserve order)
+
+- adddistrib validations: 
+    - timestamp doesn't already exist
+    - timestamp exists in historys table
+    - UtilX locked details exist for timestamp
+
+onblock: 
+    - each day at 00:00:00 we collect currency stats and utilityX details
+
+https://worbli.bloks.io/block/55379827
+Sep-22-2019, 12:00:00 AM EDT
+2019-09-22T04:00:00.000
+
+
+Notes:
+Look into using blocks per day instead of time to validate oracles.
+Instead of timestamp they provide the last blocknumber in their sample set.
+Do they use lib or head?
+The problem is there is will be a time skew due to missed blocks.
+
+
+

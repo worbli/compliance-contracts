@@ -37,7 +37,4 @@ namespace worblisystem
 
   typedef eosio::multi_index<name("providers"), provider> providers;
 
-   static constexpr eosio::name regulator_account{"worbli.reg"_n};
-   static constexpr eosio::name provider_account{"worbli.prov"_n};
-
 } // namespace worbli_compliance

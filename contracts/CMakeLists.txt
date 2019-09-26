@@ -7,6 +7,7 @@ find_package(eosio.cdt)
 
 add_subdirectory(worbli.reg)
 add_subdirectory(worbli.prov)
+add_subdirectory(worbli.resource)
 add_subdirectory(client)
 
 
