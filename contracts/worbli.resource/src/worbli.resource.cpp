@@ -237,7 +237,6 @@ ACTION resource::settotal(name source, float total_cpu_quantity, float total_net
 
   _config_state.open = true;
   inflation_table i_t(get_self(), get_self().value);
-  pk = i_t.available_primary_key();
 
   i_t.emplace(get_self(), [&](auto &i) {
     i.id = pk;
