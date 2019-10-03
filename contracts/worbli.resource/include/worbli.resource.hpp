@@ -56,6 +56,15 @@ public:
   // system actions (move to eosio.system onblock) for testing
   ACTION setmetric(time_point_sec timestamp, asset wbi_supply, asset wbi_locked, asset wbi_locked_unused);
 
+  TABLE daily_inflation
+  {
+    uint64_t id;
+    asset amount;
+    time_point_sec timestamp;
+    uint64_t primary_key() const { return (id); }
+  };
+  typedef multi_index<"inflation"_n, daily_inflation> inflation_table;
+
   TABLE distribpay
   {
     name account; //Worbli account consuming the resource
@@ -80,6 +89,9 @@ public:
     float utility_daily;
     float bppay_daily;
     float locking_daily;
+    float inflation_daily;
+    float inflation;
+    asset issue_amount;
     time_point_sec timestamp;
     uint64_t primary_key() const { return (history_id); }
   };

@@ -25,7 +25,7 @@ public:
 
       produce_blocks( 2 );
 
-      create_accounts( { N(resource), N(alice), N(bob)} );
+      create_accounts( { N(resource), N(user1), N(user2), N(user3), N(user4), N(user5)} );
       produce_blocks( 2 );
 
       set_code( N(resource), contracts::worbli_resource_wasm() );
@@ -165,6 +165,11 @@ public:
    fc::variant get_history(uint64_t index) {
       vector<char> data = get_row_by_account( N(resource), N(resource), N(historys), name(index) );
       return data.empty() ? fc::variant() : abi_ser.binary_to_variant( "history", data, abi_serializer_max_time );
+   }
+
+   fc::variant get_inflation(uint64_t index) {
+      vector<char> data = get_row_by_account( N(resource), N(resource), N(inflation), name(index) );
+      return data.empty() ? fc::variant() : abi_ser.binary_to_variant( "daily_inflation", data, abi_serializer_max_time );
    }
 
    asset get_token_supply() {

@@ -207,6 +207,14 @@ ACTION resource::settotal(name source, float total_cpu_quantity, float total_net
   print(" :: Daily_i_U: ");
   print(std::to_string(Daily_i_U));
 
+  float utility_daily = (Uppaynet / inflation) * Daily_i_U;				                //allocate proportionally to Utility
+  float bppay_daily = (Bppay_final / inflation) * Daily_i_U;				              //allocate proportionally to BPs
+  float locking_daily = (LP_final / inflation) * Daily_i_U;
+
+  // calculate inflation amount
+  auto new_tokens = static_cast<int64_t>( (Daily_i_U * double(token_supply.amount)));
+
+
   h_t.emplace(get_self(), [&](auto &h) {
     h.history_id = pk;
     h.timestamp = timestamp;
@@ -219,12 +227,23 @@ ACTION resource::settotal(name source, float total_cpu_quantity, float total_net
     h.ma_net = UTIL_NET_MA;
     h.ema_cpu = UTIL_CPU_EMA;
     h.ema_net = UTIL_NET_EMA;
-    h.utility_daily = 0;
-    h.bppay_daily = 0;
-    h.locking_daily = 0;
+    h.utility_daily = utility_daily;
+    h.bppay_daily = bppay_daily;
+    h.locking_daily = locking_daily;
+    h.inflation = inflation;
+    h.inflation_daily = Daily_i_U;
+    h.issue_amount = asset(new_tokens, eosio::symbol("WBI", 4));
   });
 
-_config_state.open = true;
+  _config_state.open = true;
+  inflation_table i_t(get_self(), get_self().value);
+  pk = i_t.available_primary_key();
+
+  i_t.emplace(get_self(), [&](auto &i) {
+    i.id = pk;
+    i.amount = asset(new_tokens, eosio::symbol("WBI", 4));
+    i.timestamp = timestamp;
+  });
 
 }
 
@@ -263,7 +282,7 @@ ACTION resource::adddistrib(name source, name account, float cpu_quantity, float
 ACTION resource::closedistrib(name source, time_point_sec timestamp) {
   require_auth(source);
   check(is_source(source) == true, "not authorized to execute this action");
-  check(_config_state.open, "distribution is already closed");
+  check(_config_state.open, "distribution is closed");
 
   history_table h_t(get_self(), get_self().value);
   auto itr_h = h_t.end();

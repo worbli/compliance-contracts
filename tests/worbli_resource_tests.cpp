@@ -45,7 +45,9 @@ BOOST_FIXTURE_TEST_CASE( test_average_calculations, worbli_resource_tester, * bo
    BOOST_REQUIRE_EQUAL( "0.05000000074505806", history["ema_cpu"] );
    BOOST_REQUIRE_EQUAL( "0.05000000074505806", history["ema_net"] );
 
-   //std::cout << get_history(7) << std::endl;
+   auto inflation = get_inflation(6);
+   std::cout << get_history(7) << std::endl;
+   std::cout << inflation << std::endl;
 
 } FC_LOG_AND_RETHROW()
 
@@ -71,6 +73,17 @@ BOOST_FIXTURE_TEST_CASE( test_resource_oracle, worbli_resource_tester ) try {
    // past date should fail
    BOOST_REQUIRE_EQUAL( wasm_assert_msg( "invalid timestamp" ),
       settotal("worbli.admin", 0.005, 0.005, "2019-12-15T00:00:00.000") );
+
+} FC_LOG_AND_RETHROW()
+
+BOOST_FIXTURE_TEST_CASE( test_distributions, worbli_resource_tester ) try {
+   BOOST_REQUIRE_EQUAL( success(), addupdsource( N(worbli.admin), 1 ) );
+   BOOST_REQUIRE_EQUAL( success(), updconfig( false, 1 ) );
+   BOOST_REQUIRE_EQUAL( success(), init( "2019-09-18T00:00:00.000" ) );
+
+   BOOST_REQUIRE_EQUAL( success(), setmetric( "2019-09-19T00:00:00.000", "10000.0000 WBI", "2500.0000 WBI", "100.0000 WBI" ) );
+   BOOST_REQUIRE_EQUAL( success(), settotal("worbli.admin", 0.005, 0.005, "2019-09-19T00:00:00.000") );
+
 
 } FC_LOG_AND_RETHROW()
 
