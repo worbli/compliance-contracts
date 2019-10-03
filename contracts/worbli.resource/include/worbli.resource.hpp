@@ -24,7 +24,7 @@ struct [[eosio::table("configs"),eosio::contract("resource")]] config
 };
 typedef singleton<"configs"_n, config> configs_singleton;
 
-CONTRACT resource : public contract
+class [[eosio::contract("worbli.resource")]] resource : public contract
 {
   using contract::contract;
 
@@ -53,7 +53,7 @@ public:
   // Init action
   ACTION init(time_point_sec start);
 
-  // system actions (move to eosio.system) for testing
+  // system actions (move to eosio.system onblock) for testing
   ACTION setmetric(time_point_sec timestamp, asset wbi_supply, asset wbi_locked, asset wbi_locked_unused);
 
   TABLE distribpay

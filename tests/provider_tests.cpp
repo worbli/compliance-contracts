@@ -1,4 +1,4 @@
-#include "worbli_tester.hpp"
+#include "worbli_compliance_tester.hpp"
 
 BOOST_AUTO_TEST_SUITE(provider_tests)
 

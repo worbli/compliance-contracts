@@ -22,9 +22,12 @@ ACTION resource::settotal(name source, float total_cpu_quantity, float total_net
   history_table h_t(get_self(), get_self().value);
   auto itr = h_t.end();
   itr--;
+
+  time_point_sec next = time_point_sec(86400 + itr->timestamp.sec_since_epoch());
   
   // time stamp must be history_table last record next day at 00:00:00.
-  //check(timestamp == time_point_sec(86400 + itr->timestamp.sec_since_epoch()), "invalid timestamp");
+  check(timestamp == next, "invalid timestamp");
+  check(next < current_time_point(), "cannot settotal for future date");
 
   metric_table m_t(get_self(), get_self().value);
   auto m_itr = m_t.find(uint64_t(timestamp.sec_since_epoch()));

@@ -12,7 +12,7 @@
 
 using namespace eosio;
 
-struct [[ eosio::table, eosio::contract("resource") ]] worblimetric
+struct [[ eosio::table, eosio::contract("worbli.resource") ]] worblimetric
 {
   time_point_sec timestamp;
   asset wbi_supply;

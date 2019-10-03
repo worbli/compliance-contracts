@@ -1,4 +1,3 @@
-Currently no validation of date
 
 - order of entry in history is important for an accurate EMA.
 - What this implies is that if there is an issue with the oracles(s) no inflation calulations will occur until they are fixed

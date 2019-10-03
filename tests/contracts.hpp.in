@@ -10,6 +10,8 @@ struct contracts {
    static std::vector<char>    worbli_prov_abi() { return read_abi("${CMAKE_BINARY_DIR}/../contracts/worbli.prov/worbli.prov.abi"); }
    static std::vector<uint8_t> client_wasm() { return read_wasm("${CMAKE_BINARY_DIR}/../contracts/client/client.wasm"); }
    static std::vector<char>    client_abi() { return read_abi("${CMAKE_BINARY_DIR}/../contracts/client/client.abi"); }
+   static std::vector<uint8_t> worbli_resource_wasm() { return read_wasm("${CMAKE_BINARY_DIR}/../contracts/worbli.resource/worbli.resource.wasm"); }
+   static std::vector<char>    worbli_resource_abi() { return read_abi("${CMAKE_BINARY_DIR}/../contracts/worbli.resource/worbli.resource.abi"); }
 
    struct util {
       static std::vector<uint8_t> token_wasm() { return read_wasm("${CMAKE_SOURCE_DIR}/test_contracts/eosio.token/eosio.token.wasm"); }
