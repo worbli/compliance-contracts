@@ -1,6 +1,10 @@
 {
     "files.associations": {
         "typeinfo": "cpp",
-        "string": "cpp"
+        "string": "cpp",
+        "thread": "cpp",
+        "__locale": "cpp",
+        "locale": "cpp",
+        "iomanip": "cpp"
     }
 }

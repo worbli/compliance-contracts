@@ -54,14 +54,14 @@ public:
   ACTION init(time_point_sec start);
 
   // system actions (move to eosio.system onblock) for testing
-  ACTION setmetric(time_point_sec timestamp, asset wbi_supply, asset wbi_locked, asset wbi_locked_unused);
+  ACTION setmetric(time_point_sec timestamp, asset wbi_supply, asset wbi_locked);
 
   TABLE daily_inflation
   {
-    uint64_t id;
-    asset amount;
     time_point_sec timestamp;
-    uint64_t primary_key() const { return (id); }
+    asset amount;
+
+    uint64_t primary_key() const { return (timestamp.sec_since_epoch()); }
   };
   typedef multi_index<"inflation"_n, daily_inflation> inflation_table;
 
@@ -79,7 +79,6 @@ public:
     uint64_t history_id;
     uint32_t daycount;
     asset locked_total;
-    asset locked_unused;
     float use_cpu;
     float use_net;
     float ma_cpu;

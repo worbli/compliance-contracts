@@ -137,12 +137,11 @@ public:
       );
    }
 
-   action_result setmetric(string timestamp, string wbi_supply, string wbi_locked, string wbi_locked_unused) {
+   action_result setmetric(string timestamp, string wbi_supply, string wbi_locked) {
       return push_action( N(resource), N(resource), N(setmetric), mvo()
            ( "timestamp", timestamp )
            ( "wbi_supply", wbi_supply )
            ( "wbi_locked", wbi_locked )
-           ( "wbi_locked_unused", wbi_locked_unused )
       );
    }
 
@@ -167,8 +166,8 @@ public:
       return data.empty() ? fc::variant() : abi_ser.binary_to_variant( "history", data, abi_serializer_max_time );
    }
 
-   fc::variant get_inflation(uint64_t index) {
-      vector<char> data = get_row_by_account( N(resource), N(resource), N(inflation), name(index) );
+   fc::variant get_inflation(uint64_t timestamp) {
+      vector<char> data = get_row_by_account( N(resource), N(resource), N(inflation), timestamp );
       return data.empty() ? fc::variant() : abi_ser.binary_to_variant( "daily_inflation", data, abi_serializer_max_time );
    }
 

@@ -111,7 +111,6 @@ ACTION resource::settotal(name source, float total_cpu_quantity, float total_net
   // Locking
 
   asset locked_total = m_itr->wbi_locked;
-  asset locked_unused = m_itr->wbi_locked_unused;
   asset token_supply = m_itr->wbi_supply;
 
   float L = static_cast<float>(locked_total.amount) / token_supply.amount;
@@ -222,7 +221,6 @@ ACTION resource::settotal(name source, float total_cpu_quantity, float total_net
     h.use_net = total_net_quantity;
     h.daycount = day_count;
     h.locked_total = asset(0, eosio::symbol("WBI", 4));
-    h.locked_unused = asset(0, eosio::symbol("WBI", 4));
     h.ma_cpu = UTIL_CPU_MA;
     h.ma_net = UTIL_NET_MA;
     h.ema_cpu = UTIL_CPU_EMA;
@@ -236,12 +234,13 @@ ACTION resource::settotal(name source, float total_cpu_quantity, float total_net
   });
 
   _config_state.open = true;
-  inflation_table i_t(get_self(), get_self().value);
 
+  // inflation table to read by eosio.system to issue inflation
+  inflation_table i_t(get_self(), get_self().value);
+  
   i_t.emplace(get_self(), [&](auto &i) {
-    i.id = pk;
-    i.amount = asset(new_tokens, eosio::symbol("WBI", 4));
     i.timestamp = timestamp;
+    i.amount = asset(new_tokens, eosio::symbol("WBI", 4));
   });
 
 }
@@ -396,7 +395,6 @@ ACTION resource::init(time_point_sec start)
     h.use_net = 0;
     h.daycount = 0;
     h.locked_total = asset(0, eosio::symbol("WBI", 4));
-    h.locked_unused = asset(0, eosio::symbol("WBI", 4));
     h.ma_cpu = 0;
     h.ma_net = 0;
     h.ema_cpu = 0;
@@ -407,7 +405,7 @@ ACTION resource::init(time_point_sec start)
   });
 }
 
-ACTION resource::setmetric(time_point_sec timestamp, asset wbi_supply, asset wbi_locked, asset wbi_locked_unused)
+ACTION resource::setmetric(time_point_sec timestamp, asset wbi_supply, asset wbi_locked)
 {
   require_auth(get_self());
   metric_table m_t(get_self(), get_self().value);
@@ -421,7 +419,6 @@ ACTION resource::setmetric(time_point_sec timestamp, asset wbi_supply, asset wbi
     s.timestamp = timestamp;
     s.wbi_supply = wbi_supply;
     s.wbi_locked = wbi_locked;
-    s.wbi_locked_unused = wbi_locked_unused;
   });
 }
 
