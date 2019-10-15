@@ -5,6 +5,8 @@
         "thread": "cpp",
         "__locale": "cpp",
         "locale": "cpp",
-        "iomanip": "cpp"
+        "iomanip": "cpp",
+        "*.tcc": "cpp",
+        "ios": "cpp"
     }
 }

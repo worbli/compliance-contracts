@@ -25,14 +25,18 @@ ACTION resource::settotal(name source, float total_cpu_quantity, float total_net
 
   time_point_sec next = time_point_sec(86400 + itr->timestamp.sec_since_epoch());
   
-  // time stamp must be history_table last record next day at 00:00:00.
+  /**
+   * timestamp must be 24 hours after last history entry
+   * time stamp cannot be greater than previous day
+   **/
+  // 
   check(timestamp == next, "invalid timestamp");
-  check(next < current_time_point(), "cannot settotal for future date");
+  check(next <= current_time_point() - 86400, "cannot settotal for future date");
 
-  metric_table m_t(get_self(), get_self().value);
+  metric_table m_t("eosio"_n, "eosio"_n.value);
   auto m_itr = m_t.find(uint64_t(timestamp.sec_since_epoch()));
   // This should not happen.  Metrics will be populated in onblock action
-  check(m_itr != m_t.end(), "metric does not exist");
+  check(m_itr != m_t.end(), "metric does not exist, please try later");
 
   // Initial Inflation
   float VT = 0.0185; // Initial Inflation Constant for Value Transfer
