@@ -11,7 +11,7 @@ BOOST_FIXTURE_TEST_CASE( provider_management, worblicompliance_tester ) try {
    BOOST_REQUIRE_EQUAL( success(), add_credential( N(country), "country") );
 
    // confirm credential validation
-   BOOST_REQUIRE_EQUAL( wasm_assert_msg( "credential does not exist" ),
+   BOOST_REQUIRE_EQUAL( wasm_assert_msg( "attribute does not exist" ),
       add_provider_credential( N(provider1), N(aml)));
 
    // confirm provider validation
@@ -31,7 +31,7 @@ BOOST_FIXTURE_TEST_CASE( provider_management, worblicompliance_tester ) try {
    BOOST_REQUIRE_EQUAL( success(), add_entry( N(provider1), N(alice), N(accredited), "true") );
    BOOST_REQUIRE_EQUAL( success(), add_entry( N(provider2), N(alice), N(country), "gb") );
 
-   BOOST_REQUIRE_EQUAL( wasm_assert_msg( "account already has credential" ),
+   BOOST_REQUIRE_EQUAL( wasm_assert_msg( "attribute already defined for account" ),
       add_entry( N(provider1), N(alice), N(kyc), "true") );
 
    BOOST_REQUIRE_EQUAL( wasm_assert_msg( "provider not approved" ),
@@ -40,7 +40,7 @@ BOOST_FIXTURE_TEST_CASE( provider_management, worblicompliance_tester ) try {
    BOOST_REQUIRE_EQUAL( wasm_assert_msg( "account does not exist" ),
       add_entry( N(provider1), N(alice1), N(kyc), "true") );
 
-   BOOST_REQUIRE_EQUAL( wasm_assert_msg( "credential not supported by provider" ),
+   BOOST_REQUIRE_EQUAL( wasm_assert_msg( "attribute not supported by provider" ),
       add_entry( N(provider1), N(alice), N(aml), "true") );
 
    produce_blocks(1);

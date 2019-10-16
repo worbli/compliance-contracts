@@ -31,7 +31,7 @@ ACTION resource::settotal(name source, float total_cpu_quantity, float total_net
    **/
   // 
   check(timestamp == next, "invalid timestamp");
-  check(next <= current_time_point() - 86400, "cannot settotal for future date");
+  check(next <=  time_point_sec(current_time_point().sec_since_epoch() - 86400), "cannot settotal for future date");
 
   metric_table m_t("eosio"_n, "eosio"_n.value);
   auto m_itr = m_t.find(uint64_t(timestamp.sec_since_epoch()));

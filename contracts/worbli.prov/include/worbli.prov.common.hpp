@@ -7,18 +7,18 @@ namespace worblisystem
     using std::vector;
     struct [[ eosio::table, eosio::contract("worbli.prov") ]] account_attribute
     {
-        name attribute_code;
+        name name;
         string value;
-        uint64_t primary_key() const { return attribute_code.value; }
+        uint64_t primary_key() const { return name.value; }
 
-        EOSLIB_SERIALIZE(account_attribute, (attribute_code)(value))
+        EOSLIB_SERIALIZE(account_attribute, (name)(value))
     };
 
     typedef eosio::multi_index<name("registry"), account_attribute> registry;
 
     struct condition
     {
-        name credential_code;
+        name attribute;
         vector<string> values;
     };
 
@@ -29,7 +29,7 @@ namespace worblisystem
         for (condition condition : conditions)
         {
             registry registry_table(provider, account.value);
-            auto itr = registry_table.find(condition.credential_code.value);
+            auto itr = registry_table.find(condition.attribute.value);
 
             if (itr == registry_table.end() ||
                 find(condition.values.begin(), condition.values.end(), itr->value) == condition.values.end())
@@ -40,21 +40,21 @@ namespace worblisystem
         return failed;
     }
 
-    inline string getattribute(name provider, name account, name credential_code, int64_t *value)
+    inline string getattribute(name provider, name account, name attribute, int64_t *value)
     {
         registry registry_table(provider, account.value);
-        auto itr = registry_table.find(credential_code.value);
+        auto itr = registry_table.find(attribute.value);
 
         if (itr == registry_table.end()) {
             value = nullptr;
             return account.to_string() + " does not have attribute " + provider.to_string()
-                    + ":" + credential_code.to_string();
+                    + ":" + attribute.to_string();
         } else {
             int64_t attr;
             std::stoi( itr->value );
             if (0) {
                 value = nullptr;
-                return provider.to_string() + ":" + credential_code.to_string() + " is not an int64";
+                return provider.to_string() + ":" + attribute.to_string() + " is not an int64";
             }
             *value = attr;
             return "";

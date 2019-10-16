@@ -182,25 +182,25 @@ public:
       );
    }
 
-   action_result add_provider_credential( account_name provider, name credential ) {
-      return push_action( N(worbli.reg), N(worbli.reg), N(addprovcred), mvo()
+   action_result add_provider_credential( account_name provider, name attribute ) {
+      return push_action( N(worbli.reg), N(worbli.reg), N(addprovattr), mvo()
            ( "provider", provider )
-           ( "credential_code", credential )
+           ( "attribute", attribute )
       );
    }
 
-   action_result add_credential( account_name credential, string description ) {
-      return push_action( N(worbli.reg), N(worbli.reg), N(addcred), mvo()
-           ( "credential_code", credential )
+   action_result add_credential( account_name attribute, string description ) {
+      return push_action( N(worbli.reg), N(worbli.reg), N(addattribute), mvo()
+           ( "attribute", attribute )
            ( "description", description )
       );
    }
 
    action_result add_entry( account_name provider, account_name account, 
-                            account_name credential_code, string value ) {
+                            account_name attribute, string value ) {
       return push_action_provider( provider, provider, N(addentry), mvo()
            ( "account", account )
-           ( "credential_code", credential_code )
+           ( "attribute", attribute )
            ( "value", value )
       );
    }

@@ -3,24 +3,24 @@
 
 using namespace worblisystem;
 
-ACTION reg::addcred( name attribute_code, std::string description ) {
+ACTION reg::addattribute( name attribute, std::string description ) {
    require_auth(_self);
 
    attributes attributes_table(_self, _self.value);
-   auto attr_itr = attributes_table.find(attribute_code.value);
+   auto attr_itr = attributes_table.find(attribute.value);
    check( attr_itr == attributes_table.end() , "attribute already exists" );
 
    attributes_table.emplace(_self, [&]( auto& rec ) {
-          rec.attribute_code = attribute_code;
+          rec.name = attribute;
           rec.description = description;
    });
 }
 
-ACTION reg::updcred( name attribute_code, std::string description ) {
+ACTION reg::updattribute( name attribute, std::string description ) {
    require_auth(_self);
 
    attributes attributes_table(_self, _self.value);
-   auto attr_itr = attributes_table.find(attribute_code.value);
+   auto attr_itr = attributes_table.find(attribute.value);
    check( attr_itr != attributes_table.end() , "attribute does not exist" );
 
    attributes_table.modify( *attr_itr, _self, [&]( auto& rec ) {
@@ -57,24 +57,24 @@ ACTION reg::updprovider( name provider, std::string description ) {
 /** *
  * TODO: how do we handle a provider that stops performing a particular validation after being active
 */
-ACTION reg::addprovcred( name provider, name attribute_code ) {
+ACTION reg::addprovattr( name provider, name attribute ) {
    require_auth(get_self());
 
-   // confirm credential code has been defined
+   // confirm attribute has been defined
    attributes attributes_table(get_self(), get_self().value);
-   auto attr_itr = attributes_table.find(attribute_code.value);
-   check( attr_itr != attributes_table.end() , "credential does not exist" );
+   auto attr_itr = attributes_table.find(attribute.value);
+   check( attr_itr != attributes_table.end() , "attribute does not exist" );
 
    providers providers_table(get_self(), get_self().value);
    auto prov_itr = providers_table.find(provider.value);
    check( prov_itr != providers_table.end() , "provider does not exist" );
 
-   auto prov_attr_itr = find( prov_itr->attributes.begin(), prov_itr->attributes.end(), attribute_code);
+   auto prov_attr_itr = find( prov_itr->attributes.begin(), prov_itr->attributes.end(), attribute);
    check( prov_attr_itr == prov_itr->attributes.end(), "provider already supports attribute" );
 
    providers_table.modify( *prov_itr, get_self(), [&]( auto& rec ) {
-        rec.attributes.emplace_back(attribute_code);
+        rec.attributes.emplace_back(attribute);
    });
 }
 
-EOSIO_DISPATCH( reg, (addcred)(updcred)(addprovider)(updprovider)(addprovcred) )
+EOSIO_DISPATCH( reg, (addattribute)(updattribute)(addprovider)(updprovider)(addprovattr) )

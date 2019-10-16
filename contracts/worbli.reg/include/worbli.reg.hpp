@@ -5,18 +5,18 @@ class [[eosio::contract("worbli.reg")]] reg : public contract {
    public:
       using contract::contract;
 
-      ACTION addcred( name credential_code, std::string description );
-      ACTION updcred( name credential_code, std::string description );
+      ACTION addattribute( name attribute, std::string description );
+      ACTION updattribute( name attribute, std::string description );
 
       ACTION addprovider( name provider, std::string description );
       ACTION updprovider( name provider, std::string description );
-      ACTION addprovcred( name provider, name credential_code );
+      ACTION addprovattr( name provider, name attribute );
 
-      using addcred_action = action_wrapper<"addcred"_n, &reg::addcred>;
-      using updcred_action = action_wrapper<"updcred"_n, &reg::updcred>;
+      using addcred_action = action_wrapper<"addattribute"_n, &reg::addattribute>;
+      using updcred_action = action_wrapper<"updattribute"_n, &reg::updattribute>;
       
       using addprovider_action = action_wrapper<"addprovider"_n, &reg::addprovider>;
       using updprovider_action = action_wrapper<"updprovider"_n, &reg::updprovider>;
-      using addprovcred_action = action_wrapper<"addprovcred"_n, &reg::addprovcred>;
+      using addprovcred_action = action_wrapper<"addprovattr"_n, &reg::addprovattr>;
 
 };

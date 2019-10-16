@@ -10,7 +10,7 @@ BOOST_FIXTURE_TEST_CASE( regulator_tests, worblicompliance_tester ) try {
    BOOST_REQUIRE_EQUAL( success(), add_credential( N(exchange), "exchange account") );
 
    // confirm credential validation
-   BOOST_REQUIRE_EQUAL( wasm_assert_msg( "credential does not exist" ),
+   BOOST_REQUIRE_EQUAL( wasm_assert_msg( "attribute does not exist" ),
       add_provider_credential( N(provider1), N(aml)));   
 
    produce_blocks(1);

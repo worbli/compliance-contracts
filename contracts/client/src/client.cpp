@@ -36,7 +36,7 @@ ACTION client::test2( name nm ) {
 string client::get_msg( vector<condition> conditions ) {
    string msg = "";
    for( condition condition : conditions ) {
-      msg = msg + " " + condition.credential_code.to_string();
+      msg = msg + " " + condition.attribute.to_string();
    }
    return msg;
 }
