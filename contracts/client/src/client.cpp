@@ -19,18 +19,11 @@ ACTION client::test1( name nm ) {
 
 }
 
-ACTION client::test2( name nm ) {
+ACTION client::testint( name provider, name account, name attribute, uint64_t value ) {
 
-   vector<condition> conditions_1 {
-      condition{"kyc"_n, {"true"}},
-      condition{"country"_n, {"us","gb","de","jp"}}
-   };
-
-   auto result = worblisystem::validate(name("provider1"), nm, conditions_1);
-   check(result.empty(), "producer 1 failed checks: " + get_msg(result));
-
-
-
+   auto result = worblisystem::getint(provider, account, attribute);
+   check(result.has_value(), "could not parse integer");
+   check(*result == value, "value is is not as expected");
 }
 
 string client::get_msg( vector<condition> conditions ) {

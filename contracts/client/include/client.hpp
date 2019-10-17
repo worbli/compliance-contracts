@@ -11,7 +11,7 @@ CONTRACT client : public contract {
       using contract::contract;
 
       ACTION test1( name nm );
-      ACTION test2( name nm );
+      ACTION testint( name provider, name account, name attribute, uint64_t value );
       string get_msg( vector<condition> conditions );
 
       using booltest_action = action_wrapper<"test1"_n, &client::test1>;

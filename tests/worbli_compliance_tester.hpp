@@ -26,7 +26,7 @@ public:
       produce_blocks( 2 );
 
       create_accounts( { N(worbli.reg), N(provider1), N(provider2), N(provider3), N(client),
-                         N(alice), N(bob)} );
+                         N(alice), N(alice1), N(bob), N(charlie)} );
       produce_blocks( 2 );
 
       set_code( N(worbli.reg), contracts::worbli_reg_wasm() );
@@ -210,6 +210,16 @@ public:
            ( "nm", account )
       );
    }
+
+   action_result client_testint( account_name provider, account_name account, account_name attribute, uint64_t value ) {
+      return push_action_client( account, N(client), N(testint), mvo()
+           ( "provider", provider )
+           ( "account", account )
+           ( "attribute", attribute )
+           ( "value", value )
+      );
+   }
+
 
    fc::variant get_stats( const string& symbolname ) {
       auto symb = eosio::chain::symbol::from_string(symbolname);

@@ -40,29 +40,35 @@ namespace worblisystem
         return failed;
     }
 
-    inline string getattribute(name provider, name account, name attribute, int64_t *value)
+/**
+    Returns an int value from a registry
+
+    @param provider account hosting the provider contract.
+    @param account account the attribute is associated to
+    @param attribute attribute to lookup
+    @return optional containg an int64_t.
+            nullopt if error
+            -1 if value doesn't exists
+*/
+    inline const std::optional<int64_t> getint(name provider, name account, name attribute)
     {
         registry registry_table(provider, account.value);
         auto itr = registry_table.find(attribute.value);
 
-        if (itr == registry_table.end()) {
-            value = nullptr;
-            return account.to_string() + " does not have attribute " + provider.to_string()
-                    + ":" + attribute.to_string();
-        } else {
-            int64_t attr;
-            std::stoi( itr->value );
-            if (0) {
-                value = nullptr;
-                return provider.to_string() + ":" + attribute.to_string() + " is not an int64";
-            }
-            *value = attr;
-            return "";
+        if (itr != registry_table.end()) {
+            print(itr->value);
+            char *c = new char[itr->value.size() + 1];
+            std::copy(itr->value.begin(), itr->value.end(), c);
+            char* end;
+            long number = std::strtol(c, &end, 0);
+            if (*end == '\0')
+                return std::optional<int64_t>{number};
+
+            return std::nullopt;
         }
 
-
+        return std::optional<int64_t>{-1};
     }
-
 
    static constexpr eosio::name regulator_account{"worbli.reg"_n};
    static constexpr eosio::name provider_account{"worbli.prov"_n};

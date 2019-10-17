@@ -47,6 +47,39 @@ BOOST_FIXTURE_TEST_CASE( provider_management, worblicompliance_tester ) try {
 
    BOOST_REQUIRE_EQUAL( success(), client_test1( N(alice) ));
 
+} FC_LOG_AND_RETHROW()
+
+
+BOOST_FIXTURE_TEST_CASE( test_client, worblicompliance_tester ) try {
+
+   BOOST_REQUIRE_EQUAL( success(), add_credential( N(maxsubacct), "max subaccounts") );
+   BOOST_REQUIRE_EQUAL( success(), add_credential( N(kyc), "kyc verified") );
+
+   // add providers
+   BOOST_REQUIRE_EQUAL( success(), add_provider( N(provider1), "provider 1") );
+
+   // add credentials supported by each provider
+   BOOST_REQUIRE_EQUAL( success(), add_provider_credential( N(provider1), N(maxsubacct)) );
+   BOOST_REQUIRE_EQUAL( success(), add_provider_credential( N(provider1), N(kyc)) );
+
+   BOOST_REQUIRE_EQUAL( success(), add_entry( N(provider1), N(alice), N(maxsubacct), "777") );
+   BOOST_REQUIRE_EQUAL( success(), add_entry( N(provider1), N(bob), N(maxsubacct), "nan") );
+   BOOST_REQUIRE_EQUAL( success(), add_entry( N(provider1), N(charlie), N(maxsubacct), "2.22") );
+
+   produce_blocks(1);
+
+   BOOST_REQUIRE_EQUAL( success(), client_testint( N(provider1), N(alice), N(maxsubacct), 777 ));
+
+   // test text value
+   BOOST_REQUIRE_EQUAL( wasm_assert_msg( "could not parse integer" ),
+      client_testint( N(provider1), N(bob), N(maxsubacct), 2 ) );
+
+   // test float value
+   BOOST_REQUIRE_EQUAL( wasm_assert_msg( "could not parse integer" ),
+      client_testint( N(provider1), N(charlie), N(maxsubacct), 2 ) );
+
+   // test no attribute
+   BOOST_REQUIRE_EQUAL( success(), client_testint( N(provider1), N(alice1), N(maxsubacct), -1 ));
 
 } FC_LOG_AND_RETHROW()
 
