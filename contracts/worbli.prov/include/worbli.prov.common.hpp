@@ -56,7 +56,6 @@ namespace worblisystem
         auto itr = registry_table.find(attribute.value);
 
         if (itr != registry_table.end()) {
-            print(itr->value);
             char *c = new char[itr->value.size() + 1];
             std::copy(itr->value.begin(), itr->value.end(), c);
             char* end;
