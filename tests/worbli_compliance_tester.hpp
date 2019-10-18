@@ -189,9 +189,10 @@ public:
       );
    }
 
-   action_result add_credential( account_name attribute, string description ) {
+   action_result add_credential( account_name attribute, string description, uint8_t type ) {
       return push_action( N(worbli.reg), N(worbli.reg), N(addattribute), mvo()
            ( "attribute", attribute )
+           ( "type", type)
            ( "description", description )
       );
    }

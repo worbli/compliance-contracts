@@ -13,10 +13,11 @@ namespace worblisystem
   struct [[ eosio::table, eosio::contract("worbli.reg") ]] attribute
   {
     name name;
+    uint32_t type;
     string description;
     uint64_t primary_key() const { return name.value; }
 
-    EOSLIB_SERIALIZE(attribute, (name)(description))
+    EOSLIB_SERIALIZE(attribute, (name)(type)(description))
   };
 
   typedef eosio::multi_index<name("attributes"), attribute> attributes;

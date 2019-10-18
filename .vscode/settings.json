@@ -8,6 +8,7 @@
         "iomanip": "cpp",
         "*.tcc": "cpp",
         "ios": "cpp",
-        "optional": "cpp"
+        "optional": "cpp",
+        "iosfwd": "cpp"
     }
 }

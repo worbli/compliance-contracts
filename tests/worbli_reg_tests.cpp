@@ -4,11 +4,11 @@ BOOST_AUTO_TEST_SUITE(worblicompliance_tests)
 
 BOOST_FIXTURE_TEST_CASE( provider_management, worblicompliance_tester ) try {
 
-   BOOST_REQUIRE_EQUAL( success(), add_credential( N(identity), "identity verified") );
-   BOOST_REQUIRE_EQUAL( success(), add_credential( N(kyc), "kyc verified") );
-   BOOST_REQUIRE_EQUAL( success(), add_credential( N(accredited), "accredited investor") );
-   BOOST_REQUIRE_EQUAL( success(), add_credential( N(exchange), "exchange account") );
-   BOOST_REQUIRE_EQUAL( success(), add_credential( N(country), "country") );
+   BOOST_REQUIRE_EQUAL( success(), add_credential( N(identity), "identity verified", 0) );
+   BOOST_REQUIRE_EQUAL( success(), add_credential( N(kyc), "kyc verified", 0) );
+   BOOST_REQUIRE_EQUAL( success(), add_credential( N(accredited), "accredited investor", 0) );
+   BOOST_REQUIRE_EQUAL( success(), add_credential( N(exchange), "exchange account", 0) );
+   BOOST_REQUIRE_EQUAL( success(), add_credential( N(country), "country", 0) );
 
    // confirm credential validation
    BOOST_REQUIRE_EQUAL( wasm_assert_msg( "attribute does not exist" ),
@@ -38,7 +38,7 @@ BOOST_FIXTURE_TEST_CASE( provider_management, worblicompliance_tester ) try {
       add_entry( N(provider3), N(alice), N(kyc), "true") );
 
    BOOST_REQUIRE_EQUAL( wasm_assert_msg( "account does not exist" ),
-      add_entry( N(provider1), N(alice1), N(kyc), "true") );
+      add_entry( N(provider1), N(alice12), N(kyc), "true") );
 
    BOOST_REQUIRE_EQUAL( wasm_assert_msg( "attribute not supported by provider" ),
       add_entry( N(provider1), N(alice), N(aml), "true") );
@@ -52,8 +52,8 @@ BOOST_FIXTURE_TEST_CASE( provider_management, worblicompliance_tester ) try {
 
 BOOST_FIXTURE_TEST_CASE( test_client, worblicompliance_tester ) try {
 
-   BOOST_REQUIRE_EQUAL( success(), add_credential( N(maxsubacct), "max subaccounts") );
-   BOOST_REQUIRE_EQUAL( success(), add_credential( N(kyc), "kyc verified") );
+   BOOST_REQUIRE_EQUAL( success(), add_credential( N(maxsubacct), "max subaccounts", 0) );
+   BOOST_REQUIRE_EQUAL( success(), add_credential( N(kyc), "kyc verified", 0) );
 
    // add providers
    BOOST_REQUIRE_EQUAL( success(), add_provider( N(provider1), "provider 1") );

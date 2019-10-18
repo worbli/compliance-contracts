@@ -4,10 +4,10 @@ BOOST_AUTO_TEST_SUITE(provider_tests)
 
 BOOST_FIXTURE_TEST_CASE( regulator_tests, worblicompliance_tester ) try {
 
-   BOOST_REQUIRE_EQUAL( success(), add_credential( N(identity), "identity verified") );
-   BOOST_REQUIRE_EQUAL( success(), add_credential( N(kyc), "kyc verified") );
-   BOOST_REQUIRE_EQUAL( success(), add_credential( N(accredited), "accredited investor") );
-   BOOST_REQUIRE_EQUAL( success(), add_credential( N(exchange), "exchange account") );
+   BOOST_REQUIRE_EQUAL( success(), add_credential( N(identity), "identity verified", 0) );
+   BOOST_REQUIRE_EQUAL( success(), add_credential( N(kyc), "kyc verified", 0) );
+   BOOST_REQUIRE_EQUAL( success(), add_credential( N(accredited), "accredited investor", 0) );
+   BOOST_REQUIRE_EQUAL( success(), add_credential( N(exchange), "exchange account", 0) );
 
    // confirm credential validation
    BOOST_REQUIRE_EQUAL( wasm_assert_msg( "attribute does not exist" ),

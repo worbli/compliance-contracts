@@ -5,8 +5,8 @@ class [[eosio::contract("worbli.reg")]] reg : public contract {
    public:
       using contract::contract;
 
-      ACTION addattribute( name attribute, std::string description );
-      ACTION updattribute( name attribute, std::string description );
+      ACTION addattribute( name attribute, std::string description, uint8_t type );
+      ACTION updattribute( name attribute, std::string description, uint8_t type );
 
       ACTION addprovider( name provider, std::string description );
       ACTION updprovider( name provider, std::string description );
@@ -17,6 +17,6 @@ class [[eosio::contract("worbli.reg")]] reg : public contract {
       
       using addprovider_action = action_wrapper<"addprovider"_n, &reg::addprovider>;
       using updprovider_action = action_wrapper<"updprovider"_n, &reg::updprovider>;
-      using addprovcred_action = action_wrapper<"addprovattr"_n, &reg::addprovattr>;
+      using addprovattr_action = action_wrapper<"addprovattr"_n, &reg::addprovattr>;
 
 };

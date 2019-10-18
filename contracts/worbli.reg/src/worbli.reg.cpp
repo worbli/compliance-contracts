@@ -3,7 +3,7 @@
 
 using namespace worblisystem;
 
-ACTION reg::addattribute( name attribute, std::string description ) {
+ACTION reg::addattribute( name attribute, std::string description, uint8_t type ) {
    require_auth(_self);
 
    attributes attributes_table(_self, _self.value);
@@ -12,11 +12,12 @@ ACTION reg::addattribute( name attribute, std::string description ) {
 
    attributes_table.emplace(_self, [&]( auto& rec ) {
           rec.name = attribute;
+          rec.type = type;
           rec.description = description;
    });
 }
 
-ACTION reg::updattribute( name attribute, std::string description ) {
+ACTION reg::updattribute( name attribute, std::string description, uint8_t type ) {
    require_auth(_self);
 
    attributes attributes_table(_self, _self.value);
@@ -25,6 +26,7 @@ ACTION reg::updattribute( name attribute, std::string description ) {
 
    attributes_table.modify( *attr_itr, _self, [&]( auto& rec ) {
           rec.description = description;
+          rec.type = type;
    });
 }
 
