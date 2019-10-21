@@ -208,7 +208,7 @@ public:
 
    action_result client_test1( account_name account ) {
       return push_action_client( account, N(client), N(test1), mvo()
-           ( "nm", account )
+           ( "account", account )
       );
    }
 

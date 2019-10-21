@@ -10,7 +10,7 @@ CONTRACT client : public contract {
    public:
       using contract::contract;
 
-      ACTION test1( name nm );
+      ACTION test1( name account );
       ACTION testint( name provider, name account, name attribute, uint64_t value );
       string get_msg( vector<condition> conditions );
 
