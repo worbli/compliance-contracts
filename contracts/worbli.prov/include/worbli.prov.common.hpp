@@ -9,9 +9,10 @@ namespace worblisystem
     {
         name name;
         string value;
+        time_point_sec expiration;
         uint64_t primary_key() const { return name.value; }
 
-        EOSLIB_SERIALIZE(account_attribute, (name)(value))
+        EOSLIB_SERIALIZE(account_attribute, (name)(value)(expiration))
     };
 
     typedef eosio::multi_index<name("registry"), account_attribute> registry;

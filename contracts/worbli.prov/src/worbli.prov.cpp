@@ -60,15 +60,15 @@ ACTION prov::migrate(std::vector<name> accounts) {
       registry registry_table(get_self(), account.value);
       registry2 registry2_table(get_self(), account.value);
 
-      auto itr = registry_table.begin();
-      while(itr != registry_table.end()) {
-         registry2_table.emplace(get_self(), [&]( auto& rec ) {
+      auto itr = registry2_table.begin();
+      while(itr != registry2_table.end()) {
+         registry_table.emplace(get_self(), [&]( auto& rec ) {
           rec.name = itr->name;
           rec.value = itr->value;
          });
          auto erase = itr;
          itr++;
-         registry_table.erase(erase);
+         registry2_table.erase(erase);
       }
    }
 }
