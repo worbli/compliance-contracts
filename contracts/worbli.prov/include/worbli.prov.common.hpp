@@ -17,18 +17,6 @@ namespace worblisystem
 
     typedef eosio::multi_index<name("registry"), account_attribute> registry;
 
-    struct [[ eosio::table, eosio::contract("worbli.prov") ]] account_attribute_2
-    {
-        name name;
-        string value;
-        time_point_sec expiration;
-        uint64_t primary_key() const { return name.value; }
-
-        EOSLIB_SERIALIZE(account_attribute_2, (name)(value)(expiration))
-    };
-
-    typedef eosio::multi_index<name("registry2"), account_attribute_2> registry2;
-
     struct condition
     {
         name provider;

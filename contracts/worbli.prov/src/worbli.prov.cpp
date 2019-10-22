@@ -54,23 +54,4 @@ ACTION prov::updentry( name account, name attribute, std::string value ) {
 ACTION prov::rmventry( name account, name attribute ) {
 }
 
-ACTION prov::migrate(std::vector<name> accounts) {
-   for (name account : accounts)
-   {
-      registry registry_table(get_self(), account.value);
-      registry2 registry2_table(get_self(), account.value);
-
-      auto itr = registry2_table.begin();
-      while(itr != registry2_table.end()) {
-         registry_table.emplace(get_self(), [&]( auto& rec ) {
-          rec.name = itr->name;
-          rec.value = itr->value;
-         });
-         auto erase = itr;
-         itr++;
-         registry2_table.erase(erase);
-      }
-   }
-}
-
-EOSIO_DISPATCH( prov, (addentry)(updentry)(rmventry)(migrate) )
+EOSIO_DISPATCH( prov, (addentry)(updentry)(rmventry) )
