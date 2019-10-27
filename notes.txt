@@ -14,18 +14,30 @@
     - timestamp doesn't already exist
     - timestamp exists in historys table
     - UtilX locked details exist for timestamp
+    - total distribution < 100
 
 onblock: 
     - each day at 00:00:00 we collect currency stats and utilityX details
-
-https://worbli.bloks.io/block/55379827
-Sep-22-2019, 12:00:00 AM EDT
-2019-09-22T04:00:00.000
-
 
 Notes:
 Look into using blocks per day instead of time to validate oracles.
 Instead of timestamp they provide the last blocknumber in their sample set.
 Do they use lib or head?
 The problem is there is will be a time skew due to missed blocks.
+
+TODO: 
+Split out distribution collection from adding distrivution to distribution.
+In case there is an error with the oracle
+
+allow multiple leasing platforms
+
+
+
+Sequence:
+
+onblock:
+   - update metrics_table once a day
+   - if inflation_record
+     then
+        issue currency and transfer to inflation
 

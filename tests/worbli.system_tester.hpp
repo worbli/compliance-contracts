@@ -586,6 +586,16 @@ public:
       );
    }
 
+   action_result adddistrib(name source, name account, float cpu_quantity, float net_quantity, string timestamp) {
+      return push_resource_action( N(worbli.admin), N(adddistrib), mvo()
+           ( "source", source )
+           ( "account", account )
+           ( "cpu_quantity", cpu_quantity )
+           ( "net_quantity", net_quantity )
+           ( "timestamp", timestamp )
+      );
+   } 
+
    fc::variant get_history(uint64_t index) {
       vector<char> data = get_row_by_account( N(resource), N(resource), N(historys), name(index) );
       return data.empty() ? fc::variant() : resource_abi_ser.binary_to_variant( "history", data, abi_serializer_max_time );

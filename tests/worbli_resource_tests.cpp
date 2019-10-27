@@ -52,6 +52,7 @@ BOOST_FIXTURE_TEST_CASE( test_average_calculations, worbli_system_tester, * boos
    BOOST_REQUIRE_EQUAL( success(), settotal("worbli.admin", 0.05, 0.05, "2019-09-25T23:59:59") );
 
    history = get_history(7);
+   std::cout << history << std::endl;
 
    BOOST_REQUIRE_EQUAL( "0.05000000074505806", history["ema_cpu"] );
    BOOST_REQUIRE_EQUAL( "0.05000000074505806", history["ema_net"] );
@@ -95,12 +96,19 @@ BOOST_FIXTURE_TEST_CASE( test_distributions, worbli_system_tester ) try {
    BOOST_REQUIRE_EQUAL( success(), regproducer( N(producer) ));
    activate_chain();
 
+   create_account_with_resources(N(user1), N(eosio));
+   create_account_with_resources(N(user2), N(eosio));
+   create_account_with_resources(N(user3), N(eosio));
+
    BOOST_REQUIRE_EQUAL( success(), addupdsource( N(worbli.admin), 1 ) );
    BOOST_REQUIRE_EQUAL( success(), updconfig( false, 1 ) );
    BOOST_REQUIRE_EQUAL( success(), init( "2019-09-18T23:59:59" ) );
    BOOST_REQUIRE_EQUAL( success(),  setwgstate("1970-01-01T00:00:00", "2019-09-18T23:59:59"));
 
    BOOST_REQUIRE_EQUAL( success(), settotal("worbli.admin", 0.005, 0.005, "2019-09-19T23:59:59") );
+   BOOST_REQUIRE_EQUAL( success(), adddistrib("worbli.admin", "user1", 2.0, 0.005, "2019-09-19T23:59:59") );
+   BOOST_REQUIRE_EQUAL( success(), adddistrib("worbli.admin", "user2", 2.5, 0.005, "2019-09-19T23:59:59") );
+   //BOOST_REQUIRE_EQUAL( success(), adddistrib("worbli.admin", "user3", 99.0, 0.005, "2019-09-19T23:59:59") );
 
 } FC_LOG_AND_RETHROW()
 

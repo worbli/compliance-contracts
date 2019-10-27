@@ -54,7 +54,9 @@ public:
   TABLE daily_inflation
   {
     time_point_sec timestamp;
-    asset amount;
+    asset utility_daily;
+    asset bppay_daily;
+    asset locking_daily;
 
     uint64_t primary_key() const { return (timestamp.sec_since_epoch()); }
   };
@@ -86,6 +88,9 @@ public:
     float inflation_daily;
     float inflation;
     asset issue_amount;
+    asset utility_tokens;
+    asset bppay_tokens;
+    asset locking_tokens;
     time_point_sec timestamp;
     uint64_t primary_key() const { return (history_id); }
   };

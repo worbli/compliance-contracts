@@ -218,8 +218,9 @@ ACTION resource::settotal(name source, float total_cpu_quantity, float total_net
   float locking_daily = (LP_final / inflation) * Daily_i_U;
 
   // calculate inflation amount
-  auto new_tokens = static_cast<int64_t>( (Daily_i_U * double(token_supply.amount)));
-
+  auto utility_tokens = static_cast<int64_t>( (utility_daily * double(token_supply.amount)));
+  auto bppay_tokens = static_cast<int64_t>( (bppay_daily * double(token_supply.amount)));
+  auto locking_tokens = static_cast<int64_t>( (locking_daily * double(token_supply.amount)));
 
   h_t.emplace(get_self(), [&](auto &h) {
     h.history_id = pk;
@@ -237,17 +238,26 @@ ACTION resource::settotal(name source, float total_cpu_quantity, float total_net
     h.locking_daily = locking_daily;
     h.inflation = inflation;
     h.inflation_daily = Daily_i_U;
-    h.issue_amount = asset(new_tokens, eosio::symbol("WBI", 4));
+    h.utility_tokens = asset(utility_tokens, eosio::symbol("WBI", 4));
+    h.bppay_tokens = asset(bppay_tokens, eosio::symbol("WBI", 4));
+    h.locking_tokens = asset(locking_tokens, eosio::symbol("WBI", 4));
   });
 
+  // open contract for user stats
   _config_state.open = true;
+
+ // reset totals for user stats
+  _config_state.allocated_cpu = 0.0;
+  _config_state.allocated_net = 0.0;
 
   // inflation table to read by eosio.system to issue inflation
   inflation_table i_t(get_self(), get_self().value);
   
   i_t.emplace(get_self(), [&](auto &i) {
     i.timestamp = timestamp;
-    i.amount = asset(new_tokens, eosio::symbol("WBI", 4));
+    i.utility_daily = asset(utility_tokens, eosio::symbol("WBI", 4));
+    i.bppay_daily = asset(bppay_tokens, eosio::symbol("WBI", 4));
+    i.locking_daily = asset(locking_tokens, eosio::symbol("WBI", 4));
   });
 
 }
@@ -281,6 +291,12 @@ ACTION resource::adddistrib(name source, name account, float cpu_quantity, float
         d.timestamp = timestamp;
         d.payout = add_claim;
     });
+  } else {
+    check(itr_d->timestamp != timestamp, "duplicate distribution" );
+    d_t.modify(itr_d, same_payer, [&](auto &d) {
+        d.timestamp = timestamp;
+        d.payout += add_claim;
+    });
   }
 }
 
@@ -301,6 +317,7 @@ ACTION resource::claimdistrib(name account)
 {
   require_auth(account);
   check(!paused(), "this contract has been paused - please try again later");
+  check(!_config_state.open, "cannot claim while inflation calculation is running");
 
   distribpay_table d_t(get_self(), get_self().value);
   auto itr = d_t.find(account.value);
