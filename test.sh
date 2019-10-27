@@ -24,10 +24,3 @@ worbli push action worbli.reg addprovcred '["provider1", "identity"]' -p worbli.
 worbli push action worbli.reg addprovcred '["provider2", "kyc"]' -p worbli.reg
 
 
-#worbli push action provider1 addentry '["producer2", "kyc", true]' -p provider1
-#worbli push action provider1 addentry '["producer2", "identity", true]' -p provider1
-
-#worbli push action test hi '["producer2"]' -p test
-
-
-

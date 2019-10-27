@@ -18,12 +18,66 @@
             ]
         },
         {
+            "name": "account_info",
+            "base": "",
+            "fields": [
+                {
+                    "name": "account",
+                    "type": "name"
+                },
+                {
+                    "name": "parent",
+                    "type": "name"
+                },
+                {
+                    "name": "kyc",
+                    "type": "uint8"
+                },
+                {
+                    "name": "max_subaccounts",
+                    "type": "int64"
+                }
+            ]
+        },
+        {
             "name": "activate",
             "base": "",
             "fields": [
                 {
                     "name": "feature_digest",
                     "type": "checksum256"
+                }
+            ]
+        },
+        {
+            "name": "addacctinfo",
+            "base": "",
+            "fields": [
+                {
+                    "name": "account",
+                    "type": "name"
+                },
+                {
+                    "name": "parent",
+                    "type": "name"
+                },
+                {
+                    "name": "kyc",
+                    "type": "int8"
+                },
+                {
+                    "name": "max_subaccounts",
+                    "type": "int64"
+                }
+            ]
+        },
+        {
+            "name": "addproducer",
+            "base": "",
+            "fields": [
+                {
+                    "name": "producer",
+                    "type": "name"
                 }
             ]
         },
@@ -46,52 +100,6 @@
                 {
                     "name": "waits",
                     "type": "wait_weight[]"
-                }
-            ]
-        },
-        {
-            "name": "bid_refund",
-            "base": "",
-            "fields": [
-                {
-                    "name": "bidder",
-                    "type": "name"
-                },
-                {
-                    "name": "amount",
-                    "type": "asset"
-                }
-            ]
-        },
-        {
-            "name": "bidname",
-            "base": "",
-            "fields": [
-                {
-                    "name": "bidder",
-                    "type": "name"
-                },
-                {
-                    "name": "newname",
-                    "type": "name"
-                },
-                {
-                    "name": "bid",
-                    "type": "asset"
-                }
-            ]
-        },
-        {
-            "name": "bidrefund",
-            "base": "",
-            "fields": [
-                {
-                    "name": "bidder",
-                    "type": "name"
-                },
-                {
-                    "name": "newname",
-                    "type": "name"
                 }
             ]
         },
@@ -326,6 +334,24 @@
             ]
         },
         {
+            "name": "debug",
+            "base": "",
+            "fields": [
+                {
+                    "name": "debug_id",
+                    "type": "uint64"
+                },
+                {
+                    "name": "timestamp",
+                    "type": "time_point_sec"
+                },
+                {
+                    "name": "producer",
+                    "type": "name"
+                }
+            ]
+        },
+        {
             "name": "defcpuloan",
             "base": "",
             "fields": [
@@ -410,6 +436,46 @@
             ]
         },
         {
+            "name": "delegated_ram",
+            "base": "",
+            "fields": [
+                {
+                    "name": "from",
+                    "type": "name"
+                },
+                {
+                    "name": "to",
+                    "type": "name"
+                },
+                {
+                    "name": "ram_stake",
+                    "type": "asset"
+                },
+                {
+                    "name": "ram_bytes",
+                    "type": "int64"
+                }
+            ]
+        },
+        {
+            "name": "delegateram",
+            "base": "",
+            "fields": [
+                {
+                    "name": "from",
+                    "type": "name"
+                },
+                {
+                    "name": "receiver",
+                    "type": "name"
+                },
+                {
+                    "name": "bytes",
+                    "type": "int64"
+                }
+            ]
+        },
+        {
             "name": "deleteauth",
             "base": "",
             "fields": [
@@ -458,20 +524,8 @@
                     "type": "block_timestamp_type"
                 },
                 {
-                    "name": "last_pervote_bucket_fill",
+                    "name": "last_inflation_distribution",
                     "type": "time_point"
-                },
-                {
-                    "name": "pervote_bucket",
-                    "type": "int64"
-                },
-                {
-                    "name": "perblock_bucket",
-                    "type": "int64"
-                },
-                {
-                    "name": "total_unpaid_blocks",
-                    "type": "uint32"
                 },
                 {
                     "name": "total_activated_stake",
@@ -490,48 +544,12 @@
                     "type": "float64"
                 },
                 {
-                    "name": "last_name_close",
-                    "type": "block_timestamp_type"
-                }
-            ]
-        },
-        {
-            "name": "eosio_global_state2",
-            "base": "",
-            "fields": [
-                {
-                    "name": "new_ram_per_block",
-                    "type": "uint16"
+                    "name": "is_producer_schedule_active",
+                    "type": "bool"
                 },
                 {
-                    "name": "last_ram_increase",
-                    "type": "block_timestamp_type"
-                },
-                {
-                    "name": "last_block_num",
-                    "type": "block_timestamp_type"
-                },
-                {
-                    "name": "total_producer_votepay_share",
-                    "type": "float64"
-                },
-                {
-                    "name": "revision",
+                    "name": "network_usage_level",
                     "type": "uint8"
-                }
-            ]
-        },
-        {
-            "name": "eosio_global_state3",
-            "base": "",
-            "fields": [
-                {
-                    "name": "last_vpay_state_update",
-                    "type": "time_point"
-                },
-                {
-                    "name": "total_vpay_share_change_rate",
-                    "type": "float64"
                 }
             ]
         },
@@ -550,6 +568,20 @@
                 {
                     "name": "quote",
                     "type": "connector"
+                }
+            ]
+        },
+        {
+            "name": "feature_toggle",
+            "base": "",
+            "fields": [
+                {
+                    "name": "feature",
+                    "type": "name"
+                },
+                {
+                    "name": "is_active",
+                    "type": "bool"
                 }
             ]
         },
@@ -640,6 +672,29 @@
             ]
         },
         {
+            "name": "metric",
+            "base": "",
+            "fields": [
+                {
+                    "name": "timestamp",
+                    "type": "time_point_sec"
+                },
+                {
+                    "name": "wbi_supply",
+                    "type": "asset"
+                },
+                {
+                    "name": "wbi_locked",
+                    "type": "asset"
+                }
+            ]
+        },
+        {
+            "name": "migrate",
+            "base": "",
+            "fields": []
+        },
+        {
             "name": "mvfrsavings",
             "base": "",
             "fields": [
@@ -664,28 +719,6 @@
                 {
                     "name": "rex",
                     "type": "asset"
-                }
-            ]
-        },
-        {
-            "name": "name_bid",
-            "base": "",
-            "fields": [
-                {
-                    "name": "newname",
-                    "type": "name"
-                },
-                {
-                    "name": "high_bidder",
-                    "type": "name"
-                },
-                {
-                    "name": "high_bid",
-                    "type": "int64"
-                },
-                {
-                    "name": "last_bid_time",
-                    "type": "time_point"
                 }
             ]
         },
@@ -786,10 +819,6 @@
                     "type": "name"
                 },
                 {
-                    "name": "total_votes",
-                    "type": "float64"
-                },
-                {
                     "name": "producer_key",
                     "type": "public_key"
                 },
@@ -802,8 +831,8 @@
                     "type": "string"
                 },
                 {
-                    "name": "unpaid_blocks",
-                    "type": "uint32"
+                    "name": "produced_blocks",
+                    "type": "uint64"
                 },
                 {
                     "name": "last_claim_time",
@@ -812,24 +841,6 @@
                 {
                     "name": "location",
                     "type": "uint16"
-                }
-            ]
-        },
-        {
-            "name": "producer_info2",
-            "base": "",
-            "fields": [
-                {
-                    "name": "owner",
-                    "type": "name"
-                },
-                {
-                    "name": "votepay_share",
-                    "type": "float64"
-                },
-                {
-                    "name": "last_votepay_share_update",
-                    "type": "time_point"
                 }
             ]
         },
@@ -844,6 +855,24 @@
                 {
                     "name": "block_signing_key",
                     "type": "public_key"
+                }
+            ]
+        },
+        {
+            "name": "producer_pay",
+            "base": "",
+            "fields": [
+                {
+                    "name": "owner",
+                    "type": "name"
+                },
+                {
+                    "name": "earned_pay",
+                    "type": "uint64"
+                },
+                {
+                    "name": "last_claim_time",
+                    "type": "uint64"
                 }
             ]
         },
@@ -890,6 +919,14 @@
                 {
                     "name": "cpu_amount",
                     "type": "asset"
+                },
+                {
+                    "name": "ram_amount",
+                    "type": "asset"
+                },
+                {
+                    "name": "ram_bytes",
+                    "type": "uint64"
                 }
             ]
         },
@@ -912,20 +949,6 @@
                 {
                     "name": "location",
                     "type": "uint16"
-                }
-            ]
-        },
-        {
-            "name": "regproxy",
-            "base": "",
-            "fields": [
-                {
-                    "name": "proxy",
-                    "type": "name"
-                },
-                {
-                    "name": "isproxy",
-                    "type": "bool"
                 }
             ]
         },
@@ -1284,6 +1307,20 @@
             ]
         },
         {
+            "name": "setfeature",
+            "base": "",
+            "fields": [
+                {
+                    "name": "feature",
+                    "type": "name"
+                },
+                {
+                    "name": "is_active",
+                    "type": "bool"
+                }
+            ]
+        },
+        {
             "name": "setparams",
             "base": "",
             "fields": [
@@ -1318,22 +1355,66 @@
             ]
         },
         {
-            "name": "setramrate",
-            "base": "",
-            "fields": [
-                {
-                    "name": "bytes_per_block",
-                    "type": "uint16"
-                }
-            ]
-        },
-        {
             "name": "setrex",
             "base": "",
             "fields": [
                 {
                     "name": "balance",
                     "type": "asset"
+                }
+            ]
+        },
+        {
+            "name": "setusagelvl",
+            "base": "",
+            "fields": [
+                {
+                    "name": "new_level",
+                    "type": "uint8"
+                }
+            ]
+        },
+        {
+            "name": "setwgstate",
+            "base": "",
+            "fields": [
+                {
+                    "name": "last_inflation_print",
+                    "type": "time_point_sec"
+                },
+                {
+                    "name": "last_metric_read",
+                    "type": "time_point_sec"
+                }
+            ]
+        },
+        {
+            "name": "setwparams",
+            "base": "",
+            "fields": [
+                {
+                    "name": "max_subaccounts",
+                    "type": "uint64"
+                }
+            ]
+        },
+        {
+            "name": "subaccount",
+            "base": "",
+            "fields": [
+                {
+                    "name": "account",
+                    "type": "name"
+                }
+            ]
+        },
+        {
+            "name": "togglesched",
+            "base": "",
+            "fields": [
+                {
+                    "name": "is_active",
+                    "type": "bool"
                 }
             ]
         },
@@ -1410,6 +1491,24 @@
             ]
         },
         {
+            "name": "updacctinfo",
+            "base": "",
+            "fields": [
+                {
+                    "name": "account",
+                    "type": "name"
+                },
+                {
+                    "name": "kyc",
+                    "type": "uint8"
+                },
+                {
+                    "name": "max_subaccounts",
+                    "type": "int64"
+                }
+            ]
+        },
+        {
             "name": "updateauth",
             "base": "",
             "fields": [
@@ -1442,12 +1541,20 @@
             ]
         },
         {
-            "name": "updtrevision",
+            "name": "updparent",
             "base": "",
             "fields": [
                 {
-                    "name": "revision",
-                    "type": "uint8"
+                    "name": "account",
+                    "type": "name"
+                },
+                {
+                    "name": "parent",
+                    "type": "name"
+                },
+                {
+                    "name": "new_parent",
+                    "type": "name"
                 }
             ]
         },
@@ -1468,26 +1575,12 @@
                     "type": "asset"
                 },
                 {
+                    "name": "ram_stake",
+                    "type": "asset"
+                },
+                {
                     "name": "ram_bytes",
                     "type": "int64"
-                }
-            ]
-        },
-        {
-            "name": "voteproducer",
-            "base": "",
-            "fields": [
-                {
-                    "name": "voter",
-                    "type": "name"
-                },
-                {
-                    "name": "proxy",
-                    "type": "name"
-                },
-                {
-                    "name": "producers",
-                    "type": "name[]"
                 }
             ]
         },
@@ -1564,6 +1657,56 @@
                     "type": "asset"
                 }
             ]
+        },
+        {
+            "name": "worbli_global_state",
+            "base": "",
+            "fields": [
+                {
+                    "name": "last_inflation_print",
+                    "type": "time_point_sec"
+                },
+                {
+                    "name": "last_metric_read",
+                    "type": "time_point_sec"
+                },
+                {
+                    "name": "message",
+                    "type": "string"
+                }
+            ]
+        },
+        {
+            "name": "worbli_params",
+            "base": "",
+            "fields": [
+                {
+                    "name": "max_subaccounts",
+                    "type": "uint64"
+                }
+            ]
+        },
+        {
+            "name": "account_info_old",
+            "base": "",
+            "fields": [
+                {
+                    "name": "account",
+                    "type": "name"
+                },
+                {
+                    "name": "parent",
+                    "type": "name"
+                },
+                {
+                    "name": "kyc",
+                    "type": "bool"
+                },
+                {
+                    "name": "children",
+                    "type": "name[]"
+                }
+            ]
         }
     ],
     "actions": [
@@ -1573,14 +1716,14 @@
             "ricardian_contract": "---\nspec_version: \"0.2.0\"\ntitle: Activate Protocol Feature\nsummary: 'Activate protocol feature {{nowrap feature_digest}}'\nicon: http://127.0.0.1/ricardian_assets/eosio.contracts/icons/admin.png#9bf1cec664863bd6aaac0f814b235f8799fb02c850e9aa5da34e8a004bd6518e\n---\n\n{{$action.account}} activates the protocol feature with a digest of {{feature_digest}}."
         },
         {
-            "name": "bidname",
-            "type": "bidname",
-            "ricardian_contract": "---\nspec_version: \"0.2.0\"\ntitle: Bid On a Premium Account Name\nsummary: '{{nowrap bidder}} bids on the premium account name {{nowrap newname}}'\nicon: http://127.0.0.1/ricardian_assets/eosio.contracts/icons/account.png#3d55a2fc3a5c20b456f5657faf666bc25ffd06f4836c5e8256f741149b0b294f\n---\n\n{{bidder}} bids {{bid}} on an auction to own the premium account name {{newname}}.\n\n{{bidder}} transfers {{bid}} to the system to cover the cost of the bid, which will be returned to {{bidder}} only if {{bidder}} is later outbid in the auction for {{newname}} by another account.\n\nIf the auction for {{newname}} closes with {{bidder}} remaining as the highest bidder, {{bidder}} will be authorized to create the account with name {{newname}}.\n\n## Bid refund behavior\n\nIf {{bidder}}’s bid on {{newname}} is later outbid by another account, {{bidder}} will be able to claim back the transferred amount of {{bid}}. The system will attempt to automatically do this on behalf of {{bidder}}, but the automatic refund may occasionally fail which will then require {{bidder}} to manually claim the refund with the bidrefund action.\n\n## Auction close criteria\n\nThe system should automatically close the auction for {{newname}} if it satisfies the condition that over a period of two minutes the following two properties continuously hold:\n\n- no one has bid on {{newname}} within the last 24 hours;\n- and, the value of the latest bid on {{newname}} is greater than the value of the bids on each of the other open auctions.\n\nBe aware that the condition to close the auction described above are sufficient but not necessary. The auction for {{newname}} cannot close unless both of the properties are simultaneously satisfied, but it may be closed without requiring the properties to hold for a period of 2 minutes."
+            "name": "addacctinfo",
+            "type": "addacctinfo",
+            "ricardian_contract": ""
         },
         {
-            "name": "bidrefund",
-            "type": "bidrefund",
-            "ricardian_contract": "---\nspec_version: \"0.2.0\"\ntitle: Claim Refund on Name Bid\nsummary: 'Claim refund on {{nowrap newname}} bid'\nicon: http://127.0.0.1/ricardian_assets/eosio.contracts/icons/account.png#3d55a2fc3a5c20b456f5657faf666bc25ffd06f4836c5e8256f741149b0b294f\n---\n\n{{bidder}} claims refund on {{newname}} bid after being outbid by someone else."
+            "name": "addproducer",
+            "type": "addproducer",
+            "ricardian_contract": ""
         },
         {
             "name": "buyram",
@@ -1638,6 +1781,11 @@
             "ricardian_contract": "---\nspec_version: \"0.2.0\"\ntitle: Stake Tokens for NET and/or CPU\nsummary: 'Stake tokens for NET and/or CPU and optionally transfer ownership'\nicon: http://127.0.0.1/ricardian_assets/eosio.contracts/icons/resource.png#3830f1ce8cb07f7757dbcf383b1ec1b11914ac34a1f9d8b065f07600fa9dac19\n---\n\n{{#if transfer}} {{from}} stakes on behalf of {{receiver}} {{stake_net_quantity}} for NET bandwidth and {{stake_cpu_quantity}} for CPU bandwidth.\n\nStaked tokens will also be transferred to {{receiver}}. The sum of these two quantities will be deducted from {{from}}’s liquid balance and add to the vote weight of {{receiver}}.\n{{else}}\n{{from}} stakes to self and delegates to {{receiver}} {{stake_net_quantity}} for NET bandwidth and {{stake_cpu_quantity}} for CPU bandwidth.\n\nThe sum of these two quantities add to the vote weight of {{from}}.\n{{/if}}"
         },
         {
+            "name": "delegateram",
+            "type": "delegateram",
+            "ricardian_contract": ""
+        },
+        {
             "name": "deleteauth",
             "type": "deleteauth",
             "ricardian_contract": "---\nspec_version: \"0.2.0\"\ntitle: Delete Account Permission\nsummary: 'Delete the {{nowrap permission}} permission of {{nowrap account}}'\nicon: http://127.0.0.1/ricardian_assets/eosio.contracts/icons/account.png#3d55a2fc3a5c20b456f5657faf666bc25ffd06f4836c5e8256f741149b0b294f\n---\n\nDelete the {{permission}} permission of {{account}}."
@@ -1666,6 +1814,11 @@
             "name": "linkauth",
             "type": "linkauth",
             "ricardian_contract": "---\nspec_version: \"0.2.0\"\ntitle: Link Action to Permission\nsummary: '{{nowrap account}} sets the minimum required permission for the {{#if type}}{{nowrap type}} action of the{{/if}} {{nowrap code}} contract to {{nowrap requirement}}'\nicon: http://127.0.0.1/ricardian_assets/eosio.contracts/icons/account.png#3d55a2fc3a5c20b456f5657faf666bc25ffd06f4836c5e8256f741149b0b294f\n---\n\n{{account}} sets the minimum required permission for the {{#if type}}{{type}} action of the{{/if}} {{code}} contract to {{requirement}}.\n\n{{#if type}}{{else}}Any links explicitly associated to specific actions of {{code}} will take precedence.{{/if}}"
+        },
+        {
+            "name": "migrate",
+            "type": "migrate",
+            "ricardian_contract": ""
         },
         {
             "name": "mvfrsavings",
@@ -1701,11 +1854,6 @@
             "name": "regproducer",
             "type": "regproducer",
             "ricardian_contract": "---\nspec_version: \"0.2.0\"\ntitle: Register as a Block Producer Candidate\nsummary: 'Register {{nowrap producer}} account as a block producer candidate'\nicon: http://127.0.0.1/ricardian_assets/eosio.contracts/icons/voting.png#db28cd3db6e62d4509af3644ce7d377329482a14bb4bfaca2aa5f1400d8e8a84\n---\n\nRegister {{producer}} account as a block producer candidate.\n\n{{$clauses.BlockProducerAgreement}}"
-        },
-        {
-            "name": "regproxy",
-            "type": "regproxy",
-            "ricardian_contract": "---\nspec_version: \"0.2.0\"\ntitle: Register/unregister as a Proxy\nsummary: 'Register/unregister {{nowrap proxy}} as a proxy account'\nicon: http://127.0.0.1/ricardian_assets/eosio.contracts/icons/voting.png#db28cd3db6e62d4509af3644ce7d377329482a14bb4bfaca2aa5f1400d8e8a84\n---\n\n{{#if isproxy}}\n{{proxy}} registers as a proxy that can vote on behalf of accounts that appoint it as their proxy.\n{{else}}\n{{proxy}} unregisters as a proxy that can vote on behalf of accounts that appoint it as their proxy.\n{{/if}}"
         },
         {
             "name": "rentcpu",
@@ -1768,6 +1916,11 @@
             "ricardian_contract": "---\nspec_version: \"0.2.0\"\ntitle: Deploy Contract Code\nsummary: 'Deploy contract code on account {{nowrap account}}'\nicon: http://127.0.0.1/ricardian_assets/eosio.contracts/icons/account.png#3d55a2fc3a5c20b456f5657faf666bc25ffd06f4836c5e8256f741149b0b294f\n---\n\nDeploy compiled contract code to the account {{account}}."
         },
         {
+            "name": "setfeature",
+            "type": "setfeature",
+            "ricardian_contract": ""
+        },
+        {
             "name": "setparams",
             "type": "setparams",
             "ricardian_contract": "---\nspec_version: \"0.2.0\"\ntitle: Set System Parameters\nsummary: 'Set System Parameters'\nicon: http://127.0.0.1/ricardian_assets/eosio.contracts/icons/admin.png#9bf1cec664863bd6aaac0f814b235f8799fb02c850e9aa5da34e8a004bd6518e\n---\n\n{{$action.account}} sets system parameters to:\n{{to_json params}}"
@@ -1783,14 +1936,29 @@
             "ricardian_contract": "---\nspec_version: \"0.2.0\"\ntitle: Configure the Available RAM\nsummary: 'Configure the available RAM'\nicon: http://127.0.0.1/ricardian_assets/eosio.contracts/icons/admin.png#9bf1cec664863bd6aaac0f814b235f8799fb02c850e9aa5da34e8a004bd6518e\n---\n\n{{$action.account}} configures the available RAM to {{max_ram_size}} bytes."
         },
         {
-            "name": "setramrate",
-            "type": "setramrate",
-            "ricardian_contract": "---\nspec_version: \"0.2.0\"\ntitle: Set the Rate of Increase of RAM\nsummary: 'Set the rate of increase of RAM per block'\nicon: http://127.0.0.1/ricardian_assets/eosio.contracts/icons/admin.png#9bf1cec664863bd6aaac0f814b235f8799fb02c850e9aa5da34e8a004bd6518e\n---\n\n{{$action.account}} sets the rate of increase of RAM to {{bytes_per_block}} bytes/block."
-        },
-        {
             "name": "setrex",
             "type": "setrex",
             "ricardian_contract": "---\nspec_version: \"0.2.0\"\ntitle: Adjust REX Pool Virtual Balance\nsummary: 'Adjust REX Pool Virtual Balance'\nicon: http://127.0.0.1/ricardian_assets/eosio.contracts/icons/admin.png#9bf1cec664863bd6aaac0f814b235f8799fb02c850e9aa5da34e8a004bd6518e\n---\n\n{{$action.account}} adjusts REX loan rate by setting REX pool virtual balance to {{balance}}. No token transfer or issue is executed in this action."
+        },
+        {
+            "name": "setusagelvl",
+            "type": "setusagelvl",
+            "ricardian_contract": ""
+        },
+        {
+            "name": "setwgstate",
+            "type": "setwgstate",
+            "ricardian_contract": ""
+        },
+        {
+            "name": "setwparams",
+            "type": "setwparams",
+            "ricardian_contract": ""
+        },
+        {
+            "name": "togglesched",
+            "type": "togglesched",
+            "ricardian_contract": ""
         },
         {
             "name": "undelegatebw",
@@ -1813,6 +1981,11 @@
             "ricardian_contract": "---\nspec_version: \"0.2.0\"\ntitle: Buy REX Tokens Using Staked Tokens\nsummary: '{{nowrap owner}} buys REX tokens in exchange for tokens currently staked to NET and/or CPU'\nicon: http://127.0.0.1/ricardian_assets/eosio.contracts/icons/rex.png#d229837fa62a464b9c71e06060aa86179adf0b3f4e3b8c4f9702f4f4b0c340a8\n---\n\n{{from_net}} and {{from_cpu}} are withdrawn from {{receiver}}’s NET and CPU bandwidths respectively. These funds are used to purchase REX tokens at the current market exchange rate. In order for the action to succeed, {{owner}} must have voted for a proxy or at least 21 block producers.\n\nA sell order of the purchased amount can only be initiated after waiting for the maturity period of 4 to 5 days to pass. Even then, depending on the market conditions, the initiated sell order may not be executed immediately."
         },
         {
+            "name": "updacctinfo",
+            "type": "updacctinfo",
+            "ricardian_contract": ""
+        },
+        {
             "name": "updateauth",
             "type": "updateauth",
             "ricardian_contract": "---\nspec_version: \"0.2.0\"\ntitle: Modify Account Permission\nsummary: 'Add or update the {{nowrap permission}} permission of {{nowrap account}}'\nicon: http://127.0.0.1/ricardian_assets/eosio.contracts/icons/account.png#3d55a2fc3a5c20b456f5657faf666bc25ffd06f4836c5e8256f741149b0b294f\n---\n\nModify, and create if necessary, the {{permission}} permission of {{account}} to have a parent permission of {{parent}} and the following authority:\n{{to_json auth}}"
@@ -1823,14 +1996,9 @@
             "ricardian_contract": "---\nspec_version: \"0.2.0\"\ntitle: Update REX Owner Vote Weight\nsummary: 'Update vote weight to current value of held REX tokens'\nicon: http://127.0.0.1/ricardian_assets/eosio.contracts/icons/rex.png#d229837fa62a464b9c71e06060aa86179adf0b3f4e3b8c4f9702f4f4b0c340a8\n---\n\nUpdate vote weight of {{owner}} account to current value of held REX tokens."
         },
         {
-            "name": "updtrevision",
-            "type": "updtrevision",
-            "ricardian_contract": "---\nspec_version: \"0.2.0\"\ntitle: Update System Contract Revision Number\nsummary: 'Update system contract revision number'\nicon: http://127.0.0.1/ricardian_assets/eosio.contracts/icons/admin.png#9bf1cec664863bd6aaac0f814b235f8799fb02c850e9aa5da34e8a004bd6518e\n---\n\n{{$action.account}} advances the system contract revision number to {{revision}}."
-        },
-        {
-            "name": "voteproducer",
-            "type": "voteproducer",
-            "ricardian_contract": "---\nspec_version: \"0.2.0\"\ntitle: Vote for Block Producers\nsummary: '{{nowrap voter}} votes for {{#if proxy}}the proxy {{nowrap proxy}}{{else}}up to 30 block producer candidates{{/if}}'\nicon: http://127.0.0.1/ricardian_assets/eosio.contracts/icons/voting.png#db28cd3db6e62d4509af3644ce7d377329482a14bb4bfaca2aa5f1400d8e8a84\n---\n\n{{#if proxy}}\n{{voter}} votes for the proxy {{proxy}}.\nAt the time of voting the full weight of voter’s staked (CPU + NET) tokens will be cast towards each of the producers voted by {{proxy}}.\n{{else}}\n{{voter}} votes for the following block producer candidates:\n\n{{#each producers}}\n  + {{this}}\n{{/each}}\n\nAt the time of voting the full weight of voter’s staked (CPU + NET) tokens will be cast towards each of the above producers.\n{{/if}}"
+            "name": "updparent",
+            "type": "updparent",
+            "ricardian_contract": ""
         },
         {
             "name": "withdraw",
@@ -1847,8 +2015,8 @@
             "key_types": []
         },
         {
-            "name": "bidrefunds",
-            "type": "bid_refund",
+            "name": "accountinfo1",
+            "type": "account_info",
             "index_type": "i64",
             "key_names": [],
             "key_types": []
@@ -1861,8 +2029,29 @@
             "key_types": []
         },
         {
+            "name": "debug",
+            "type": "debug",
+            "index_type": "i64",
+            "key_names": [],
+            "key_types": []
+        },
+        {
             "name": "delband",
             "type": "delegated_bandwidth",
+            "index_type": "i64",
+            "key_names": [],
+            "key_types": []
+        },
+        {
+            "name": "delram",
+            "type": "delegated_ram",
+            "index_type": "i64",
+            "key_names": [],
+            "key_types": []
+        },
+        {
+            "name": "features",
+            "type": "feature_toggle",
             "index_type": "i64",
             "key_names": [],
             "key_types": []
@@ -1875,22 +2064,8 @@
             "key_types": []
         },
         {
-            "name": "global2",
-            "type": "eosio_global_state2",
-            "index_type": "i64",
-            "key_names": [],
-            "key_types": []
-        },
-        {
-            "name": "global3",
-            "type": "eosio_global_state3",
-            "index_type": "i64",
-            "key_names": [],
-            "key_types": []
-        },
-        {
-            "name": "namebids",
-            "type": "name_bid",
+            "name": "metrics",
+            "type": "metric",
             "index_type": "i64",
             "key_names": [],
             "key_types": []
@@ -1903,15 +2078,15 @@
             "key_types": []
         },
         {
-            "name": "producers",
-            "type": "producer_info",
+            "name": "prodpay",
+            "type": "producer_pay",
             "index_type": "i64",
             "key_names": [],
             "key_types": []
         },
         {
-            "name": "producers2",
-            "type": "producer_info2",
+            "name": "producers",
+            "type": "producer_info",
             "index_type": "i64",
             "key_names": [],
             "key_types": []
@@ -1959,6 +2134,13 @@
             "key_types": []
         },
         {
+            "name": "subaccounts",
+            "type": "subaccount",
+            "index_type": "i64",
+            "key_names": [],
+            "key_types": []
+        },
+        {
             "name": "userres",
             "type": "user_resources",
             "index_type": "i64",
@@ -1968,6 +2150,27 @@
         {
             "name": "voters",
             "type": "voter_info",
+            "index_type": "i64",
+            "key_names": [],
+            "key_types": []
+        },
+        {
+            "name": "wglobal",
+            "type": "worbli_global_state",
+            "index_type": "i64",
+            "key_names": [],
+            "key_types": []
+        },
+        {
+            "name": "wparams",
+            "type": "worbli_params",
+            "index_type": "i64",
+            "key_names": [],
+            "key_types": []
+        },
+        {
+            "name": "accountinfo",
+            "type": "account_info_old",
             "index_type": "i64",
             "key_names": [],
             "key_types": []

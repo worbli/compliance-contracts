@@ -12,12 +12,11 @@
 
 using namespace eosio;
 
-struct [[ eosio::table, eosio::contract("worbli.resource") ]] metric
+struct metric
 {
-  time_point_sec timestamp;
+  eosio::time_point_sec timestamp;
   asset wbi_supply;
   asset wbi_locked;
   uint64_t primary_key() const { return (timestamp.sec_since_epoch()); }
 };
-typedef multi_index<"metrics"_n, metric> metric_table;
-
+typedef eosio::multi_index<"metrics"_n, metric> metrics_table;

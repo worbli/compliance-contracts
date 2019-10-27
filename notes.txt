@@ -29,5 +29,3 @@ Instead of timestamp they provide the last blocknumber in their sample set.
 Do they use lib or head?
 The problem is there is will be a time skew due to missed blocks.
 
-
-

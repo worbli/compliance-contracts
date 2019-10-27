@@ -8,8 +8,6 @@
 #include <eosio/transaction.hpp>
 #include <string>
 
-#include "metric.hpp"
-
 using namespace eosio;
 using eosio::const_mem_fun;
 using std::string;
@@ -52,9 +50,6 @@ public:
 
   // Init action
   ACTION init(time_point_sec start);
-
-  // system actions (move to eosio.system onblock) for testing
-  ACTION setmetric(time_point_sec timestamp, asset wbi_supply, asset wbi_locked);
 
   TABLE daily_inflation
   {

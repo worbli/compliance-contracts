@@ -1,5 +1,8 @@
 #include "worbli.resource.hpp"
 #include <math.h>
+
+#include "metric.hpp"
+
 using eosio::current_time_point;
 
 resource::resource(name s, name code, datastream<const char *> ds)
@@ -33,7 +36,7 @@ ACTION resource::settotal(name source, float total_cpu_quantity, float total_net
   check(timestamp == next, "invalid timestamp");
   check(next <=  time_point_sec(current_time_point().sec_since_epoch() - 86400), "cannot settotal for future date");
 
-  metric_table m_t("eosio"_n, "eosio"_n.value);
+  metrics_table m_t("eosio"_n, "eosio"_n.value);
   auto m_itr = m_t.find(uint64_t(timestamp.sec_since_epoch()));
   // This should not happen.  Metrics will be populated in onblock action
   check(m_itr != m_t.end(), "metric does not exist, please try later");
@@ -409,21 +412,4 @@ ACTION resource::init(time_point_sec start)
   });
 }
 
-ACTION resource::setmetric(time_point_sec timestamp, asset wbi_supply, asset wbi_locked)
-{
-  require_auth(get_self());
-  metric_table m_t(get_self(), get_self().value);
-
-  auto itr = m_t.find(uint64_t(timestamp.sec_since_epoch()));
-  check(itr == m_t.end(), "metric already exists");
-
-  // TODO validate metric is 00:00:00 UTC
-
-  m_t.emplace(get_self(), [&](auto &s) {
-    s.timestamp = timestamp;
-    s.wbi_supply = wbi_supply;
-    s.wbi_locked = wbi_locked;
-  });
-}
-
-EOSIO_DISPATCH(resource, (settotal)(adddistrib)(claimdistrib)(closedistrib)(updconfig)(addupdsource)(transfer)(setmetric)(init));
+EOSIO_DISPATCH(resource, (settotal)(adddistrib)(claimdistrib)(closedistrib)(updconfig)(addupdsource)(transfer)(init));
