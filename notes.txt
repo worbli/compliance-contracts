@@ -39,5 +39,8 @@ onblock:
    - update metrics_table once a day
    - if inflation_record
      then
-        issue currency and transfer to inflation
+        issue currency and transfer:
+           - bp
+           - locking
+           - utilityX
 

@@ -53,7 +53,8 @@ BOOST_FIXTURE_TEST_CASE( test_average_calculations, worbli_system_tester, * boos
 
    history = get_history(7);
    std::cout << history << std::endl;
-
+   std::cout << get_resource_config() << std::endl;
+   
    BOOST_REQUIRE_EQUAL( "0.05000000074505806", history["ema_cpu"] );
    BOOST_REQUIRE_EQUAL( "0.05000000074505806", history["ema_net"] );
 
@@ -109,6 +110,7 @@ BOOST_FIXTURE_TEST_CASE( test_distributions, worbli_system_tester ) try {
    BOOST_REQUIRE_EQUAL( success(), adddistrib("worbli.admin", "user1", 2.0, 0.005, "2019-09-19T23:59:59") );
    BOOST_REQUIRE_EQUAL( success(), adddistrib("worbli.admin", "user2", 2.5, 0.005, "2019-09-19T23:59:59") );
    //BOOST_REQUIRE_EQUAL( success(), adddistrib("worbli.admin", "user3", 99.0, 0.005, "2019-09-19T23:59:59") );
+   std::cout << get_resource_config() << std::endl;
 
 } FC_LOG_AND_RETHROW()
 

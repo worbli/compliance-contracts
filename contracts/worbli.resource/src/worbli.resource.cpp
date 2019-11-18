@@ -249,16 +249,7 @@ ACTION resource::settotal(name source, float total_cpu_quantity, float total_net
  // reset totals for user stats
   _config_state.allocated_cpu = 0.0;
   _config_state.allocated_net = 0.0;
-
-  // inflation table to read by eosio.system to issue inflation
-  inflation_table i_t(get_self(), get_self().value);
-  
-  i_t.emplace(get_self(), [&](auto &i) {
-    i.timestamp = timestamp;
-    i.utility_daily = asset(utility_tokens, eosio::symbol("WBI", 4));
-    i.bppay_daily = asset(bppay_tokens, eosio::symbol("WBI", 4));
-    i.locking_daily = asset(locking_tokens, eosio::symbol("WBI", 4));
-  });
+  _config_state.unetpay = 0.0;
 
 }
 
@@ -275,13 +266,16 @@ ACTION resource::adddistrib(name source, name account, float cpu_quantity, float
   itr_h--;
 
   check(itr_h->timestamp == timestamp, "timestamp is not correct, collecting stats for: " + std::to_string(timestamp.sec_since_epoch()));
-  check(_config_state.allocated_cpu + cpu_quantity <= 100, "cpu allocation greater than 100%" );
-  check(_config_state.allocated_net + net_quantity <= 100, "net allocation greater than 100%" );
-
+  // check(_config_state.allocated_cpu + cpu_quantity <= 100, "cpu allocation greater than 100%" );
+  // check(_config_state.allocated_net + net_quantity <= 100, "net allocation greater than 100%" );
+  check(_config_state.allocated_total + net_quantity + cpu_quantity <= 100, "total resource allocation greater than 100%" );
+  
+  _config_state.allocated_total += net_quantity + cpu_quantity;
   _config_state.allocated_cpu += cpu_quantity;
   _config_state.allocated_net += net_quantity;
+  _config_state.unetpay += net_quantity * itr_h->utility_daily / 100;
 
-  float add_claim = 0.0;
+  float add_claim = cpu_quantity * itr_h->utility_daily;
 
   distribpay_table d_t(get_self(), get_self().value);
   auto itr_d = d_t.find(account.value);
@@ -311,6 +305,17 @@ ACTION resource::closedistrib(name source, time_point_sec timestamp) {
 
   check(itr_h->timestamp == timestamp, "timestamp is not correct, collecting stats for: " + std::to_string(timestamp.sec_since_epoch()));
   _config_state.open = false;
+
+  // inflation table to read by eosio.system to issue inflation
+  // there may be a timing issue if users try to claim before inflation is issued
+  inflation_table i_t(get_self(), get_self().value);
+  
+  i_t.emplace(get_self(), [&](auto &i) {
+    i.timestamp = timestamp;
+    i.utility_daily = itr_h->utility_tokens;
+    i.bppay_daily = itr_h->bppay_tokens;
+    i.locking_daily = itr_h->locking_tokens;
+  });
 }
 
 ACTION resource::claimdistrib(name account)
@@ -351,7 +356,7 @@ ACTION resource::claimdistrib(name account)
   add_balance(st.issuer, quantity, st.issuer);
   if (account != st.issuer)
   {
-    SEND_INLINE_ACTION(*this, transfer, {{st.issuer, "active"_n}}, {st.issuer, account, quantity, memo});
+    //SEND_INLINE_ACTION(*this, transfer, {{st.issuer, "active"_n}}, {st.issuer, account, quantity, memo});
   }
 }
 
@@ -384,26 +389,6 @@ ACTION resource::addupdsource(name account, uint8_t in_out)
   }
 }
 
-ACTION resource::transfer(name from, name to, asset quantity, string memo)
-{
-  require_auth(from);
-  check(!paused(), "this contract has been paused - please try again later");
-  check(from != to, "cannot transfer to self");
-  check(is_account(to), "to account does not exist");
-  auto sym = quantity.symbol.code();
-  stats statstable(get_self(), sym.raw());
-  const auto &st = statstable.get(sym.raw());
-  require_recipient(from);
-  require_recipient(to);
-  check(quantity.is_valid(), "invalid quantity");
-  check(quantity.amount > 0, "must transfer positive quantity");
-  check(quantity.symbol == st.supply.symbol, "symbol precision mismatch");
-  check(memo.size() <= 256, "memo has more than 256 bytes");
-  auto payer = has_auth(to) ? to : from;
-  sub_balance(from, quantity);
-  add_balance(to, quantity, payer);
-}
-
 ACTION resource::init(time_point_sec start)
 {
   require_auth(get_self());
@@ -429,4 +414,4 @@ ACTION resource::init(time_point_sec start)
   });
 }
 
-EOSIO_DISPATCH(resource, (settotal)(adddistrib)(claimdistrib)(closedistrib)(updconfig)(addupdsource)(transfer)(init));
+EOSIO_DISPATCH(resource, (settotal)(adddistrib)(claimdistrib)(closedistrib)(updconfig)(addupdsource)(init));

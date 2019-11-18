@@ -928,6 +928,12 @@ public:
       return data.empty() ? fc::variant() : abi_ser.binary_to_variant( "worbli_global_state", data, abi_serializer_max_time );
    }
 
+   fc::variant get_resource_config() {
+      vector<char> data = get_row_by_account( N(resource), N(resource), N(configs), N(configs) );
+      if (data.empty()) std::cout << "\nData is empty\n" << std::endl;
+      return data.empty() ? fc::variant() : resource_abi_ser.binary_to_variant( "config", data, abi_serializer_max_time );
+   }
+
    vector<name> active_and_vote_producers() {
       //stake more than 15% of total EOS supply to activate chain
       transfer( "eosio", "alice1111111", core_sym::from_string("650000000.0000"), "eosio" );

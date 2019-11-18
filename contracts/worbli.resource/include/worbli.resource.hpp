@@ -12,12 +12,14 @@ using namespace eosio;
 using eosio::const_mem_fun;
 using std::string;
 
-struct [[eosio::table("configs"),eosio::contract("resource")]] config
+struct [[eosio::table("configs"),eosio::contract("worbli.resource")]] config
 {
   bool paused;
   uint32_t emadraglimit = 2;
   float allocated_cpu = 0.0;
   float allocated_net = 0.0;
+  float allocated_total = 0.0;
+  float unetpay = 0.0;
   bool open = false;
 };
 typedef singleton<"configs"_n, config> configs_singleton;
@@ -45,8 +47,6 @@ public:
   ACTION updconfig(bool paused, uint32_t emadraglimit);
   ACTION addupdsource(name account, uint8_t in_out);
   //***************************************************************************************************
-  // TOKEN functions
-  ACTION transfer(name from, name to, asset quantity, string memo);
 
   // Init action
   ACTION init(time_point_sec start);
